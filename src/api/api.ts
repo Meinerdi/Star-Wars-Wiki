@@ -1,3 +1,14 @@
-const BASE_URL = 'https://swapi.dev/api/'
+import axios from 'axios'
 
-export default BASE_URL
+const instance = axios.create({
+  baseURL: 'http://swapi.dev/api/',
+})
+
+export const API = {
+  getAllUsers() {
+    return instance.get('people/')
+  },
+  getCurrentUser(userId: any) {
+    return instance.get(`people/${userId}`)
+  },
+}

@@ -1,8 +1,12 @@
 import React from 'react'
-import logo from '../../assets/images/logo.png'
+// import logo from '../../assets/images/logo.png'
 import s from './Header.module.scss'
 
-const Header = () => {
+export interface HeaderProps {
+  logo: any
+}
+
+export const Header: React.FC<HeaderProps> = ({ logo }) => {
   return (
     <header className={s.header}>
       <nav>
@@ -11,5 +15,3 @@ const Header = () => {
     </header>
   )
 }
-
-export default Header

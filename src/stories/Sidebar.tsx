@@ -14,7 +14,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside className={s.sidebar}>
       <nav className={s.navigation}>
-        <ul>
+        <ul className={s['menu-list']}>
           {list.map((page) => (
             <li key={page} className={s['menu-item']}>
               {navLink ? (
