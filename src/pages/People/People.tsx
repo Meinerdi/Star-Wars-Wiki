@@ -9,16 +9,21 @@ import { Preloader } from '../../components/Preloader/Preloader'
 interface PeopleProps {
   fetchUsersData: () => void
   people: any
+  isFetching: boolean
 }
 
-const People: React.FC<PeopleProps> = ({ fetchUsersData, people }) => {
+const People: React.FC<PeopleProps> = ({
+  fetchUsersData,
+  people,
+  isFetching,
+}) => {
   useEffect(() => {
     fetchUsersData()
   }, [])
 
   return (
     <div>
-      {people && (
+      {!isFetching && (
         <>
           <MainSearchField
             placeholder={`Search among ${people?.count} people...`}
@@ -37,13 +42,14 @@ const People: React.FC<PeopleProps> = ({ fetchUsersData, people }) => {
           </div>
         </>
       )}
-      {!people && <Preloader />}
+      {isFetching && <Preloader />}
     </div>
   )
 }
 
 const mapStateToProps = (state: any) => ({
   people: state.ajaxReducer.people,
+  isFetching: state.ajaxReducer.isFetching,
 })
 
 export const PeopleContainer = connect(mapStateToProps, { fetchUsersData })(

@@ -1,8 +1,13 @@
-import { FETCH_USERS_DATA, FETCH_CURRENT_USER_DATA } from '../actions/types'
+import {
+  FETCH_USERS_DATA,
+  FETCH_CURRENT_USER_DATA,
+  SET_IS_FETCHING,
+} from '../actions/types'
 
 const initialState = {
   people: null,
   currentPeople: null,
+  isFetching: false,
 }
 
 type ActionType = {
@@ -22,6 +27,12 @@ const ajaxReducer = (state = initialState, action: ActionType) => {
       return {
         ...state,
         currentPeople: action.payload,
+      }
+
+    case SET_IS_FETCHING:
+      return {
+        ...state,
+        isFetching: action.payload,
       }
 
     default:
