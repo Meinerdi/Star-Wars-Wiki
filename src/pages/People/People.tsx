@@ -1,15 +1,51 @@
 import React, { useEffect } from 'react'
-import { API } from '../../api/api'
-import { SearchField } from '../../components/SearchField/SearchField'
+import { connect } from 'react-redux'
+import { CardMini } from '../../components/CardMini/CardMini'
+import { fetchUsersData } from '../../redux/actions/actions'
+import { MainSearchField } from '../../stories/SearchField.stories'
+import s from './People.module.scss'
+import { Preloader } from '../../components/Preloader/Preloader'
 
-export const People = () => {
-  // useEffect(() => {
-  //   API.getAllUsers().then((response) => console.log(response))
-  // }, [])
+interface PeopleProps {
+  fetchUsersData: () => void
+  people: any
+}
+
+const People: React.FC<PeopleProps> = ({ fetchUsersData, people }) => {
+  useEffect(() => {
+    fetchUsersData()
+  }, [])
+
   return (
     <div>
-      <SearchField placeholder="Search people..." />
-      There is should be cards, pagination, arrows
+      {people && (
+        <>
+          <MainSearchField
+            placeholder={`Search among ${people?.count} people...`}
+          />
+          <div className={s['cards-holder']}>
+            {people?.results.map((person: any) => {
+              const personUrl = person.url.split('/').slice(-3, -1).join('/')
+              return (
+                <CardMini
+                  person={person}
+                  key={person.name}
+                  personUrl={personUrl}
+                />
+              )
+            })}
+          </div>
+        </>
+      )}
+      {!people && <Preloader />}
     </div>
   )
 }
+
+const mapStateToProps = (state: any) => ({
+  people: state.ajaxReducer.people,
+})
+
+export const PeopleContainer = connect(mapStateToProps, { fetchUsersData })(
+  People
+)

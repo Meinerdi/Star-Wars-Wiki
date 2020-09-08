@@ -3,13 +3,14 @@ import { Route, Switch } from 'react-router-dom'
 import s from './App.module.scss'
 import logo from './assets/images/logo.png'
 import { Films } from './pages/Films/Films'
-import { People } from './pages/People/People'
+import { PeopleContainer } from './pages/People/People'
 import { Planets } from './pages/Planets/Planets'
 import { Species } from './pages/Species/Species'
 import { Starships } from './pages/Starships/Starships'
 import { Vehicles } from './pages/Vehicles/Vehicles'
 import { MainHeader } from './stories/Header.stories'
 import { MainSidebar } from './stories/Sidebar.stories'
+import { PeopleDetailsContainer } from './pages/PeopleDetails/PeopleDetails'
 
 const menuPages = [
   'People',
@@ -29,7 +30,8 @@ const App = () => {
           <MainSidebar list={menuPages} navLink />
           <div className={s.pages}>
             <Switch>
-              <Route component={People} path="/people" />
+              <Route component={PeopleContainer} path="/people" exact />
+              <Route component={PeopleDetailsContainer} path="/people/:id" />
               <Route component={Species} path="/species" />
               <Route component={Vehicles} path="/vehicles" />
               <Route component={Starships} path="/starships" />
