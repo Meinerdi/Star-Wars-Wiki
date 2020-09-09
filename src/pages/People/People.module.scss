@@ -3,3 +3,16 @@
   flex-wrap: wrap;
   margin: 0 -10px;
 }
+
+.people-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.people-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 5;
+}

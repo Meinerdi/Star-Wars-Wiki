@@ -5,10 +5,28 @@ const instance = axios.create({
 })
 
 export const API = {
-  getAllUsers() {
+  getAllPeople() {
     return instance.get('people/')
   },
-  getCurrentUser(userId: any) {
-    return instance.get(`people/${userId}`)
+  getCurrentPeople(peopleId: any) {
+    return instance.get(`people/${peopleId}`)
+  },
+  getSearchedPeople(searchedText: string) {
+    return instance.get(`people/?search=${searchedText}`)
+  },
+  getPeoplePage(pageNumber: string) {
+    return instance.get(`people/?page=${pageNumber}`)
+  },
+  getAllSpecies() {
+    return instance.get('species/')
+  },
+  getCurrentSpecies(speciesId: any) {
+    return instance.get(`species/${speciesId}`)
+  },
+  getSearchedSpecies(searchedText: string) {
+    return instance.get(`species/?search=${searchedText}`)
+  },
+  getSpeciesPage(pageNumber: string) {
+    return instance.get(`species/?page=${pageNumber}`)
   },
 }

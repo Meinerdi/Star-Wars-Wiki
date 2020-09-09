@@ -3,16 +3,31 @@ import s from './SearchField.module.scss'
 
 export interface SearchFieldProps {
   placeholder: string
+  handleSubmitCallback: any
 }
 
-export const SearchField: React.FC<SearchFieldProps> = ({ placeholder }) => {
+export const SearchField: React.FC<SearchFieldProps> = ({
+  placeholder,
+  handleSubmitCallback,
+}) => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+  }
+
+  const handleInputChange = (e: any) => {
+    handleSubmitCallback(e.target.value)
+  }
+
   return (
     <div className={s['input-wrapper']}>
-      <input
-        type="text"
-        placeholder={placeholder}
-        className={s['search-input']}
-      />
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder={placeholder}
+          className={s['search-input']}
+          onChange={handleInputChange}
+        />
+      </form>
     </div>
   )
 }

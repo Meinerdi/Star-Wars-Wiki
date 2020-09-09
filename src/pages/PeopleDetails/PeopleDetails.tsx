@@ -2,17 +2,17 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import noImage from '../../assets/images/404.png'
 import { Preloader } from '../../components/Preloader/Preloader'
-import { fetchCurrentUserData } from '../../redux/actions/actions'
+import { fetchCurrentPeopleData } from '../../redux/actions/actionsPeople'
 import s from './PeopleDetails.module.scss'
 
 const PeopleDetails = ({
   match,
-  fetchCurrentUserData,
+  fetchCurrentPeopleData,
   currentPeople,
   isFetching,
 }: any) => {
   useEffect(() => {
-    fetchCurrentUserData(match.params.id)
+    fetchCurrentPeopleData(match.params.id)
   }, [])
 
   return (
@@ -99,10 +99,10 @@ const PeopleDetails = ({
 }
 
 const mapStateToProps = (state: any) => ({
-  currentPeople: state.ajaxReducer.currentPeople,
-  isFetching: state.ajaxReducer.isFetching,
+  currentPeople: state.peopleReducer.currentPeople,
+  isFetching: state.globalReducer.isFetching,
 })
 
 export const PeopleDetailsContainer = connect(mapStateToProps, {
-  fetchCurrentUserData,
+  fetchCurrentPeopleData,
 })(PeopleDetails)

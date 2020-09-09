@@ -1,0 +1,39 @@
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between;
+  .paginataion-list {
+    display: flex;
+  }
+}
+
+.control-button {
+  padding: 2px 10px;
+  cursor: pointer;
+  background: rgba(24, 22, 22, 0.438);
+  color: #fff;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba(3, 3, 3, 0.438);
+    color: rgb(155, 28, 28);
+    transition: all 0.2s ease;
+  }
+
+  &.disabled {
+    visibility: hidden;
+  }
+}
+
+.list-item {
+  background: rgba(3, 3, 3, 0.438);
+  margin: 0 4px 0 0;
+  padding: 2px 6px;
+  text-decoration: none;
+  color: #fff;
+
+  &:hover {
+    background: rgba(3, 3, 3, 0.438);
+    color: rgb(155, 28, 28);
+    transition: all 0.2s ease;
+  }
+}

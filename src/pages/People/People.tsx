@@ -1,57 +1,83 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { CardMini } from '../../components/CardMini/CardMini'
-import { fetchUsersData } from '../../redux/actions/actions'
+import {
+  fetchPeopleData,
+  fetchSearchedPeopleData,
+  fetchPeoplePageData,
+} from '../../redux/actions/actionsPeople'
 import { MainSearchField } from '../../stories/SearchField.stories'
 import s from './People.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
+import { Pagination } from '../../components/Pagination/Pagination'
+import { createLinkForPaginationControls } from '../../utils/utils'
 
 interface PeopleProps {
-  fetchUsersData: () => void
+  fetchPeopleData: () => void
   people: any
   isFetching: boolean
+  fetchSearchedPeopleData: () => void
+  fetchPeoplePageData: () => void
 }
 
 const People: React.FC<PeopleProps> = ({
-  fetchUsersData,
+  fetchPeopleData,
   people,
   isFetching,
+  fetchSearchedPeopleData,
+  fetchPeoplePageData,
 }) => {
   useEffect(() => {
-    fetchUsersData()
+    fetchPeopleData()
   }, [])
 
+  const linkForNextPagination = createLinkForPaginationControls(people?.next)
+  const linkForPreviousPagination = createLinkForPaginationControls(
+    people?.previous
+  )
+
   return (
-    <div>
+    <div className={s['people-wrapper']}>
+      <MainSearchField
+        placeholder={`Search among ${people?.count} people...`}
+        handleSubmitCallback={fetchSearchedPeopleData}
+      />
       {!isFetching && (
-        <>
-          <MainSearchField
-            placeholder={`Search among ${people?.count} people...`}
-          />
+        <div className={s['people-inner']}>
           <div className={s['cards-holder']}>
             {people?.results.map((person: any) => {
               const personUrl = person.url.split('/').slice(-3, -1).join('/')
               return (
                 <CardMini
-                  person={person}
+                  data={person}
                   key={person.name}
-                  personUrl={personUrl}
+                  dataUrl={`/${personUrl}`}
                 />
               )
             })}
           </div>
-        </>
+        </div>
       )}
       {isFetching && <Preloader />}
+      <Pagination
+        totalItems={people?.count}
+        needItemsInPage={10}
+        nextPage={linkForNextPagination}
+        previousPage={linkForPreviousPagination}
+        linkTemplate="people/?page="
+        handleClickPageCallback={fetchPeoplePageData}
+      />
     </div>
   )
 }
 
 const mapStateToProps = (state: any) => ({
-  people: state.ajaxReducer.people,
-  isFetching: state.ajaxReducer.isFetching,
+  people: state.peopleReducer.people,
+  isFetching: state.globalReducer.isFetching,
 })
 
-export const PeopleContainer = connect(mapStateToProps, { fetchUsersData })(
-  People
-)
+export const PeopleContainer = connect(mapStateToProps, {
+  fetchPeopleData,
+  fetchSearchedPeopleData,
+  fetchPeoplePageData,
+})(People)
