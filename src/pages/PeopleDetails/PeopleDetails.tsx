@@ -83,7 +83,7 @@ const PeopleDetails = ({
                 <tr>
                   <td>Films: </td>
                   <td className={s['thumbnail-holder']}>
-                    {currentPeople?.films.map((i: any) => {
+                    {currentPeople?.films.map((i: any, idx: any) => {
                       return (
                         <Link
                           to={`/${i.split('/').slice(-3).join('/')}`}
