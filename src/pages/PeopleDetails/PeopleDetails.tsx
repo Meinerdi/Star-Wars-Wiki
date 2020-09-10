@@ -1,8 +1,13 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import noImage from '../../assets/images/404.png'
 import { Preloader } from '../../components/Preloader/Preloader'
-import { fetchCurrentPeopleData } from '../../redux/actions/actionsPeople'
+import {
+  fetchCurrentPeopleData,
+  setThumbnailsFilms,
+} from '../../redux/actions/actionsPeople'
+import { createThumbnailResponseDispatcher } from '../../utils/utils'
 import s from './PeopleDetails.module.scss'
 
 const PeopleDetails = ({
@@ -10,10 +15,16 @@ const PeopleDetails = ({
   fetchCurrentPeopleData,
   currentPeople,
   isFetching,
+  setThumbnailsFilms,
+  thumbnailsPeople,
 }: any) => {
   useEffect(() => {
     fetchCurrentPeopleData(match.params.id)
   }, [])
+
+  if (currentPeople) {
+    createThumbnailResponseDispatcher(currentPeople.films, setThumbnailsFilms)
+  }
 
   return (
     <div className={s['card-wrapper']}>
@@ -70,12 +81,31 @@ const PeopleDetails = ({
             <table>
               <tbody>
                 <tr>
+                  <td>Films: </td>
+                  <td className={s['thumbnail-holder']}>
+                    {currentPeople?.films.map((i: any) => {
+                      return (
+                        <Link
+                          to={`/${i.split('/').slice(-3).join('/')}`}
+                          className={s['card-thumbnail']}
+                        >
+                          1
+                        </Link>
+                      )
+                    })}
+                  </td>
+                </tr>
+                <tr>
                   <td>Homeworld: </td>
                   <td>{currentPeople?.homeworld}</td>
                 </tr>
                 <tr>
                   <td>Starships: </td>
-                  <td>{currentPeople?.starships}</td>
+                  <td>
+                    {!currentPeople?.starships.length
+                      ? 'Currently unknown'
+                      : currentPeople?.starships}
+                  </td>
                 </tr>
                 <tr>
                   <td>Vehicles: </td>
@@ -84,10 +114,6 @@ const PeopleDetails = ({
                 <tr>
                   <td>Species: </td>
                   <td>{currentPeople?.species}</td>
-                </tr>
-                <tr>
-                  <td>Films: </td>
-                  <td>{currentPeople?.films}</td>
                 </tr>
               </tbody>
             </table>
@@ -100,9 +126,11 @@ const PeopleDetails = ({
 
 const mapStateToProps = (state: any) => ({
   currentPeople: state.peopleReducer.currentPeople,
+  thumbnailsPeople: state.peopleReducer.thumbnailsPeople,
   isFetching: state.globalReducer.isFetching,
 })
 
 export const PeopleDetailsContainer = connect(mapStateToProps, {
   fetchCurrentPeopleData,
+  setThumbnailsFilms,
 })(PeopleDetails)

@@ -1,4 +1,4 @@
-.person-avatar {
+.planets-avatar {
   max-width: 30%;
   margin: 0 10px 0 0;
 }
@@ -8,7 +8,7 @@
   margin: 0 0 10px;
 }
 
-.personal-info-list {
+.planets-info-list {
   height: 100%;
   padding: 10px 40px;
 
@@ -27,7 +27,7 @@
   }
 }
 
-.personal-info {
+.planets-info {
   width: 100%;
   background: rgba(24, 22, 22, 0.438);
 }
@@ -37,14 +37,5 @@
 }
 
 .additional-info {
-  @extend .personal-info-list;
-}
-
-.card-thumbnail {
-  background: rgba(24, 22, 22, 0.438);
-  margin: 0 5px 0 0;
-}
-
-.thumbnail-holder {
-  display: flex;
+  @extend .planets-info-list;
 }

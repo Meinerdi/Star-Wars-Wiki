@@ -1,4 +1,4 @@
-.person-avatar {
+.films-avatar {
   max-width: 30%;
   margin: 0 10px 0 0;
 }
@@ -8,7 +8,7 @@
   margin: 0 0 10px;
 }
 
-.personal-info-list {
+.films-info-list {
   height: 100%;
   padding: 10px 40px;
 
@@ -27,7 +27,7 @@
   }
 }
 
-.personal-info {
+.films-info {
   width: 100%;
   background: rgba(24, 22, 22, 0.438);
 }
@@ -37,14 +37,12 @@
 }
 
 .additional-info {
-  @extend .personal-info-list;
+  @extend .films-info-list;
 }
 
-.card-thumbnail {
+.description {
+  font-size: 11px;
   background: rgba(24, 22, 22, 0.438);
-  margin: 0 5px 0 0;
-}
-
-.thumbnail-holder {
-  display: flex;
+  margin: 0 0 10px;
+  padding: 5px;
 }

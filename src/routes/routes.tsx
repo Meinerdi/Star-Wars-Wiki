@@ -1,13 +1,17 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { Films } from '../pages/Films/Films'
+import { FilmsContainer } from '../pages/Films/Films'
+import { FilmsDetailsContainer } from '../pages/FilmsDetails/FilmsDetails'
 import { PeopleContainer } from '../pages/People/People'
 import { PeopleDetailsContainer } from '../pages/PeopleDetails/PeopleDetails'
-import { Planets } from '../pages/Planets/Planets'
+import { PlanetsContainer } from '../pages/Planets/Planets'
+import { PlanetsDetailsContainer } from '../pages/PlanetsDetails/PlanetsDetails'
 import { SpeciesContainer } from '../pages/Species/Species'
-import { Starships } from '../pages/Starships/Starships'
-import { Vehicles } from '../pages/Vehicles/Vehicles'
 import { SpeciesDetailsContainer } from '../pages/SpeciesDetails/SpeciesDetails'
+import { StarshipsContainer } from '../pages/Starships/Starships'
+import { StarshipsDetailsContainer } from '../pages/StarshipsDetails/StarshipsDetails'
+import { VehiclesContainer } from '../pages/Vehicles/Vehicles'
+import { VehiclesDetailsContainer } from '../pages/VehiclesDetails/VehiclesDetails'
 
 export const Routes = () => (
   <Switch>
@@ -15,9 +19,13 @@ export const Routes = () => (
     <Route component={PeopleDetailsContainer} path="/people/:id" />
     <Route component={SpeciesContainer} path="/species" exact />
     <Route component={SpeciesDetailsContainer} path="/species/:id" />
-    <Route component={Vehicles} path="/vehicles" />
-    <Route component={Starships} path="/starships" />
-    <Route component={Planets} path="/planets" />
-    <Route component={Films} path="/films" />
+    <Route component={VehiclesContainer} path="/vehicles" exact />
+    <Route component={VehiclesDetailsContainer} path="/vehicles/:id" />
+    <Route component={StarshipsContainer} path="/starships" exact />
+    <Route component={StarshipsDetailsContainer} path="/starships/:id" />
+    <Route component={PlanetsContainer} path="/planets" exact />
+    <Route component={PlanetsDetailsContainer} path="/planets/:id" />
+    <Route component={FilmsContainer} path="/films" exact />
+    <Route component={FilmsDetailsContainer} path="/films/:id" />
   </Switch>
 )

@@ -29,4 +29,52 @@ export const API = {
   getSpeciesPage(pageNumber: string) {
     return instance.get(`species/?page=${pageNumber}`)
   },
+  getAllVehicles() {
+    return instance.get('vehicles/')
+  },
+  getCurrentVehicles(vehicleId: any) {
+    return instance.get(`vehicles/${vehicleId}`)
+  },
+  getSearchedVehicles(searchedText: string) {
+    return instance.get(`vehicles/?search=${searchedText}`)
+  },
+  getVehiclesPage(pageNumber: string) {
+    return instance.get(`vehicles/?page=${pageNumber}`)
+  },
+  getAllStarships() {
+    return instance.get('starships/')
+  },
+  getCurrentStarships(starshipId: any) {
+    return instance.get(`starships/${starshipId}`)
+  },
+  getSearchedStarships(searchedText: string) {
+    return instance.get(`starships/?search=${searchedText}`)
+  },
+  getStarshipsPage(pageNumber: string) {
+    return instance.get(`starships/?page=${pageNumber}`)
+  },
+  getAllPlanets() {
+    return instance.get('planets/')
+  },
+  getCurrentPlanets(planetId: any) {
+    return instance.get(`planets/${planetId}`)
+  },
+  getSearchedPlanets(searchedText: string) {
+    return instance.get(`planets/?search=${searchedText}`)
+  },
+  getPlanetsPage(pageNumber: string) {
+    return instance.get(`planets/?page=${pageNumber}`)
+  },
+  getAllFilms() {
+    return instance.get('films/')
+  },
+  getCurrentFilms(filmId: any) {
+    return instance.get(`films/${filmId}`)
+  },
+  getSearchedFilms(searchedText: string) {
+    return instance.get(`films/?search=${searchedText}`)
+  },
+  getFilmsPage(pageNumber: string) {
+    return instance.get(`films/?page=${pageNumber}`)
+  },
 }
