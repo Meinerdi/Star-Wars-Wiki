@@ -22,9 +22,11 @@ const PeopleDetails = ({
     fetchCurrentPeopleData(match.params.id)
   }, [])
 
-  if (currentPeople) {
-    createThumbnailResponseDispatcher(currentPeople.films, setThumbnailsFilms)
-  }
+  useEffect(() => {
+    if (currentPeople) {
+      createThumbnailResponseDispatcher(currentPeople.films, setThumbnailsFilms)
+    }
+  }, [currentPeople])
 
   return (
     <div className={s['card-wrapper']}>
@@ -89,7 +91,8 @@ const PeopleDetails = ({
                           to={`/${i.split('/').slice(-3).join('/')}`}
                           className={s['card-thumbnail']}
                         >
-                          1
+                          {thumbnailsPeople.films &&
+                            thumbnailsPeople.films[idx]}
                         </Link>
                       )
                     })}
@@ -124,11 +127,13 @@ const PeopleDetails = ({
   )
 }
 
-const mapStateToProps = (state: any) => ({
-  currentPeople: state.peopleReducer.currentPeople,
-  thumbnailsPeople: state.peopleReducer.thumbnailsPeople,
-  isFetching: state.globalReducer.isFetching,
-})
+const mapStateToProps = (state: any) => {
+  return {
+    currentPeople: state.peopleReducer.currentPeople,
+    thumbnailsPeople: state.peopleReducer.thumbnailsPeople,
+    isFetching: state.globalReducer.isFetching,
+  }
+}
 
 export const PeopleDetailsContainer = connect(mapStateToProps, {
   fetchCurrentPeopleData,

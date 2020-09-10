@@ -48,7 +48,7 @@ export const peopleReducer = (state = initialState, action: ActionType) => {
     case SET_THUMBNAILS_FILMS:
       return {
         ...state,
-        thumbnails: {
+        thumbnailsPeople: {
           ...state.thumbnailsPeople,
           films: [...action.payload],
         },

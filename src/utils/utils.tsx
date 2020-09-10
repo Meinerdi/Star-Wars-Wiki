@@ -8,7 +8,7 @@ export const createLinkForPaginationControls = (link: string) => {
 }
 
 export const createThumbnailResponseDispatcher = (
-  arrayOfEndpoints: any,
+  arrayOfEndpoints: string[],
   actionCreator: any
 ) => {
   const arrayOfRequests = arrayOfEndpoints.map((request: any) =>
