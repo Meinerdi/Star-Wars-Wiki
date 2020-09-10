@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import s from './Pagination.module.scss'
+// import { URLSearchParams } from 'url'
 
 interface PaginationProps {
   totalItems: number
@@ -43,19 +44,27 @@ export const Pagination: React.FC<PaginationProps> = ({
         Previous
       </Link>
       <ul className={s['paginataion-list']}>
-        {pages.map((page) => {
-          return (
-            <li key={`/${linkTemplate}${page}`}>
-              <NavLink
-                to={`/${linkTemplate}${page}`}
-                onClick={() => handleClickPageCallback(page)}
-                className={s['list-item']}
-              >
-                {page}
-              </NavLink>
-            </li>
-          )
-        })}
+        {pages.map((page) => (
+          <li key={`/${linkTemplate}${page}`}>
+            <NavLink
+              to={`/${linkTemplate}${page}`}
+              onClick={() => handleClickPageCallback(page)}
+              className={s['list-item']}
+              activeClassName={s.active}
+              isActive={(match, location) => {
+                if (!location.search) {
+                  return false
+                }
+                const pageNumber =
+                  new URLSearchParams(location.search).get('page') || ''
+
+                return pageNumber === page.toString()
+              }}
+            >
+              {page}
+            </NavLink>
+          </li>
+        ))}
       </ul>
       <Link
         to={`/${nextPage}`}

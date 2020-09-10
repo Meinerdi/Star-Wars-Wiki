@@ -7,12 +7,14 @@ import { Planets } from '../pages/Planets/Planets'
 import { SpeciesContainer } from '../pages/Species/Species'
 import { Starships } from '../pages/Starships/Starships'
 import { Vehicles } from '../pages/Vehicles/Vehicles'
+import { SpeciesDetailsContainer } from '../pages/SpeciesDetails/SpeciesDetails'
 
 export const Routes = () => (
   <Switch>
     <Route component={PeopleContainer} path="/people" exact />
     <Route component={PeopleDetailsContainer} path="/people/:id" />
-    <Route component={SpeciesContainer} path="/species" />
+    <Route component={SpeciesContainer} path="/species" exact />
+    <Route component={SpeciesDetailsContainer} path="/species/:id" />
     <Route component={Vehicles} path="/vehicles" />
     <Route component={Starships} path="/starships" />
     <Route component={Planets} path="/planets" />
