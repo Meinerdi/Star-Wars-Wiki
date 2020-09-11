@@ -3,6 +3,13 @@ import { connect } from 'react-redux'
 import noImage from '../../assets/images/404.png'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { fetchCurrentVehiclesData } from '../../redux/actions/actionsVehicles'
+import { ThumbnailsHolder } from '../../components/ThumbnailsHolder/ThumbnailsHolder'
+import {
+  setThumbnailsFilms,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
+} from '../../redux/actions/actionsThumbnails'
+import { createThumbnailResponseDispatcher } from '../../utils/utils'
 import s from './VehiclesDetails.module.scss'
 
 const VehiclesDetails = ({
@@ -10,10 +17,36 @@ const VehiclesDetails = ({
   fetchCurrentVehiclesData,
   currentVehicles,
   isFetching,
+  setThumbnailsFilms,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
+  thumbnails,
 }: any) => {
   useEffect(() => {
     fetchCurrentVehiclesData(match.params.id)
+
+    return () => {
+      resetThumbnailsStore()
+    }
   }, [])
+
+  useEffect(() => {
+    if (currentVehicles) {
+      createThumbnailResponseDispatcher(
+        currentVehicles.films,
+        setThumbnailsFilms
+      )
+      createThumbnailResponseDispatcher(
+        currentVehicles.pilots,
+        setThumbnailsPeople
+      )
+    }
+  }, [currentVehicles])
+
+  const enpointsOfThumbnails = {
+    films: currentVehicles?.films,
+    people: currentVehicles?.pilots,
+  }
 
   return (
     <div className={s['card-wrapper']}>
@@ -74,20 +107,11 @@ const VehiclesDetails = ({
               </table>
             </div>
           </div>
-          <div className={s['additional-info']}>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Pilots: </td>
-                  <td>{currentVehicles?.pilots}</td>
-                </tr>
-                <tr>
-                  <td>Films: </td>
-                  <td>{currentVehicles?.films}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <ThumbnailsHolder
+            thumbnails={thumbnails}
+            rootLocation={match.url}
+            enpointsOfThumbnails={enpointsOfThumbnails}
+          />
         </>
       )}
     </div>
@@ -97,8 +121,12 @@ const VehiclesDetails = ({
 const mapStateToProps = (state: any) => ({
   currentVehicles: state.vehiclesReducer.currentVehicles,
   isFetching: state.globalReducer.isFetching,
+  thumbnails: state.thumbnailsReducer,
 })
 
 export const VehiclesDetailsContainer = connect(mapStateToProps, {
   fetchCurrentVehiclesData,
+  setThumbnailsFilms,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
 })(VehiclesDetails)

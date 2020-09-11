@@ -4,16 +4,70 @@ import noImage from '../../assets/images/404.png'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { fetchCurrentFilmsData } from '../../redux/actions/actionsFilms'
 import s from './FilmsDetails.module.scss'
+import { ThumbnailsHolder } from '../../components/ThumbnailsHolder/ThumbnailsHolder'
+import {
+  setThumbnailsPeople,
+  setThumbnailsHomeworld,
+  setThumbnailsStarships,
+  setThumbnailsVehicles,
+  setThumbnailsSpecies,
+  resetThumbnailsStore,
+} from '../../redux/actions/actionsThumbnails'
+import { createThumbnailResponseDispatcher } from '../../utils/utils'
 
 const FilmsDetails = ({
   match,
   fetchCurrentFilmsData,
   currentFilms,
   isFetching,
+  thumbnails,
+  setThumbnailsPeople,
+  setThumbnailsHomeworld,
+  setThumbnailsStarships,
+  setThumbnailsVehicles,
+  setThumbnailsSpecies,
+  resetThumbnailsStore,
 }: any) => {
   useEffect(() => {
     fetchCurrentFilmsData(match.params.id)
+
+    return () => {
+      resetThumbnailsStore()
+    }
   }, [])
+
+  useEffect(() => {
+    if (currentFilms) {
+      createThumbnailResponseDispatcher(
+        currentFilms.characters,
+        setThumbnailsPeople
+      )
+      createThumbnailResponseDispatcher(
+        currentFilms.planets,
+        setThumbnailsHomeworld
+      )
+      createThumbnailResponseDispatcher(
+        currentFilms.starships,
+        setThumbnailsStarships
+      )
+      createThumbnailResponseDispatcher(
+        currentFilms.vehicles,
+        setThumbnailsVehicles
+      )
+      createThumbnailResponseDispatcher(
+        currentFilms.species,
+        setThumbnailsSpecies
+      )
+    }
+  }, [currentFilms])
+
+  const enpointsOfThumbnails = {
+    people: currentFilms?.characters,
+    homeworld: currentFilms?.planets,
+    starships: currentFilms?.starships,
+    vehicles: currentFilms?.vehicles,
+    species: currentFilms?.species,
+  }
 
   return (
     <div className={s['card-wrapper']}>
@@ -51,32 +105,11 @@ const FilmsDetails = ({
           <div className={s.description}>
             <p>{currentFilms?.opening_crawl}</p>
           </div>
-          <div className={s['additional-info']}>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Characters: </td>
-                  <td>{currentFilms?.characters}</td>
-                </tr>
-                <tr>
-                  <td>Planets: </td>
-                  <td>{currentFilms?.planets}</td>
-                </tr>
-                <tr>
-                  <td>Starships: </td>
-                  <td>{currentFilms?.starships}</td>
-                </tr>
-                <tr>
-                  <td>Vehicles: </td>
-                  <td>{currentFilms?.vehicles}</td>
-                </tr>
-                <tr>
-                  <td>Species: </td>
-                  <td>{currentFilms?.species}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <ThumbnailsHolder
+            thumbnails={thumbnails}
+            rootLocation={match.url}
+            enpointsOfThumbnails={enpointsOfThumbnails}
+          />
         </>
       )}
     </div>
@@ -86,8 +119,15 @@ const FilmsDetails = ({
 const mapStateToProps = (state: any) => ({
   currentFilms: state.filmsReducer.currentFilms,
   isFetching: state.globalReducer.isFetching,
+  thumbnails: state.thumbnailsReducer,
 })
 
 export const FilmsDetailsContainer = connect(mapStateToProps, {
   fetchCurrentFilmsData,
+  setThumbnailsPeople,
+  setThumbnailsHomeworld,
+  setThumbnailsStarships,
+  setThumbnailsVehicles,
+  setThumbnailsSpecies,
+  resetThumbnailsStore,
 })(FilmsDetails)

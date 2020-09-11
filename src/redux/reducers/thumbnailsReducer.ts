@@ -4,6 +4,8 @@ import {
   SET_THUMBNAILS_STARSHIPS,
   SET_THUMBNAILS_VEHICLES,
   SET_THUMBNAILS_SPECIES,
+  SET_THUMBNAILS_PEOPLE,
+  RESET_THUMBNAILS_STORE,
 } from '../actions/types'
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
   starships: null,
   vehicles: null,
   species: null,
+  people: null,
 }
 
 type ActionType = {
@@ -45,6 +48,23 @@ export const thumbnailsReducer = (state = initialState, action: ActionType) => {
       return {
         ...state,
         species: [...action.payload],
+      }
+
+    case SET_THUMBNAILS_PEOPLE:
+      return {
+        ...state,
+        people: [...action.payload],
+      }
+
+    case RESET_THUMBNAILS_STORE:
+      return {
+        ...state,
+        films: null,
+        homeworld: null,
+        starships: null,
+        vehicles: null,
+        species: null,
+        people: null,
       }
 
     default:

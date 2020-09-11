@@ -4,16 +4,49 @@ import noImage from '../../assets/images/404.png'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { fetchCurrentStarshipsData } from '../../redux/actions/actionsStarships'
 import s from './StarshipsDetails.module.scss'
+import { ThumbnailsHolder } from '../../components/ThumbnailsHolder/ThumbnailsHolder'
+import {
+  setThumbnailsFilms,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
+} from '../../redux/actions/actionsThumbnails'
+import { createThumbnailResponseDispatcher } from '../../utils/utils'
 
 const StarshipsDetails = ({
   match,
   fetchCurrentStarshipsData,
   currentStarships,
   isFetching,
+  setThumbnailsFilms,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
+  thumbnails,
 }: any) => {
   useEffect(() => {
     fetchCurrentStarshipsData(match.params.id)
+
+    return () => {
+      resetThumbnailsStore()
+    }
   }, [])
+
+  useEffect(() => {
+    if (currentStarships) {
+      createThumbnailResponseDispatcher(
+        currentStarships.films,
+        setThumbnailsFilms
+      )
+      createThumbnailResponseDispatcher(
+        currentStarships.pilots,
+        setThumbnailsPeople
+      )
+    }
+  }, [currentStarships])
+
+  const enpointsOfThumbnails = {
+    films: currentStarships?.films,
+    people: currentStarships?.pilots,
+  }
 
   return (
     <div className={s['card-wrapper']}>
@@ -82,20 +115,11 @@ const StarshipsDetails = ({
               </table>
             </div>
           </div>
-          <div className={s['additional-info']}>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Pilots: </td>
-                  <td>{currentStarships?.pilots}</td>
-                </tr>
-                <tr>
-                  <td>Films: </td>
-                  <td>{currentStarships?.films}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <ThumbnailsHolder
+            thumbnails={thumbnails}
+            rootLocation={match.url}
+            enpointsOfThumbnails={enpointsOfThumbnails}
+          />
         </>
       )}
     </div>
@@ -105,8 +129,12 @@ const StarshipsDetails = ({
 const mapStateToProps = (state: any) => ({
   currentStarships: state.starshipsReducer.currentStarships,
   isFetching: state.globalReducer.isFetching,
+  thumbnails: state.thumbnailsReducer,
 })
 
 export const StarshipsDetailsContainer = connect(mapStateToProps, {
   fetchCurrentStarshipsData,
+  setThumbnailsFilms,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
 })(StarshipsDetails)

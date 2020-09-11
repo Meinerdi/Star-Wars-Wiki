@@ -2,13 +2,15 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import noImage from '../../assets/images/404.png'
 import { Preloader } from '../../components/Preloader/Preloader'
+import { ThumbnailsHolder } from '../../components/ThumbnailsHolder/ThumbnailsHolder'
 import { fetchCurrentSpeciesData } from '../../redux/actions/actionsSpecies'
 import {
   setThumbnailsFilms,
   setThumbnailsHomeworld,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
 } from '../../redux/actions/actionsThumbnails'
 import { createThumbnailResponseDispatcher } from '../../utils/utils'
-import { ThumbnailsHolder } from '../../components/ThumbnailsHolder/ThumbnailsHolder'
 import s from './SpeciesDetails.module.scss'
 
 const SpeciesDetails = ({
@@ -19,9 +21,15 @@ const SpeciesDetails = ({
   thumbnails,
   setThumbnailsFilms,
   setThumbnailsHomeworld,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
 }: any) => {
   useEffect(() => {
     fetchCurrentSpeciesData(match.params.id)
+
+    return () => {
+      resetThumbnailsStore()
+    }
   }, [])
 
   useEffect(() => {
@@ -34,12 +42,17 @@ const SpeciesDetails = ({
         [currentSpecies.homeworld],
         setThumbnailsHomeworld
       )
+      createThumbnailResponseDispatcher(
+        currentSpecies.people,
+        setThumbnailsPeople
+      )
     }
   }, [currentSpecies])
 
   const enpointsOfThumbnails = {
     films: currentSpecies?.films,
     homeworld: [currentSpecies?.homeworld],
+    people: currentSpecies?.people,
   }
 
   return (
@@ -114,4 +127,6 @@ export const SpeciesDetailsContainer = connect(mapStateToProps, {
   fetchCurrentSpeciesData,
   setThumbnailsFilms,
   setThumbnailsHomeworld,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
 })(SpeciesDetails)

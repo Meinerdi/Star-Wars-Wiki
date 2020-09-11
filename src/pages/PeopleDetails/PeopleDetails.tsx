@@ -5,6 +5,7 @@ import { Preloader } from '../../components/Preloader/Preloader'
 import { ThumbnailsHolder } from '../../components/ThumbnailsHolder/ThumbnailsHolder'
 import { fetchCurrentPeopleData } from '../../redux/actions/actionsPeople'
 import {
+  resetThumbnailsStore,
   setThumbnailsFilms,
   setThumbnailsHomeworld,
   setThumbnailsSpecies,
@@ -25,9 +26,14 @@ const PeopleDetails = ({
   setThumbnailsStarships,
   setThumbnailsVehicles,
   setThumbnailsSpecies,
+  resetThumbnailsStore,
 }: any) => {
   useEffect(() => {
     fetchCurrentPeopleData(match.params.id)
+
+    return () => {
+      resetThumbnailsStore()
+    }
   }, [])
 
   useEffect(() => {
@@ -137,4 +143,5 @@ export const PeopleDetailsContainer = connect(mapStateToProps, {
   setThumbnailsStarships,
   setThumbnailsVehicles,
   setThumbnailsSpecies,
+  resetThumbnailsStore,
 })(PeopleDetails)

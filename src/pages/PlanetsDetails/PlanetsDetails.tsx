@@ -4,16 +4,49 @@ import noImage from '../../assets/images/404.png'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { fetchCurrentPlanetsData } from '../../redux/actions/actionsPlanets'
 import s from './PlanetsDetails.module.scss'
+import { ThumbnailsHolder } from '../../components/ThumbnailsHolder/ThumbnailsHolder'
+import {
+  setThumbnailsFilms,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
+} from '../../redux/actions/actionsThumbnails'
+import { createThumbnailResponseDispatcher } from '../../utils/utils'
 
 const PlanetsDetails = ({
   match,
   fetchCurrentPlanetsData,
   currentPlanets,
   isFetching,
+  thumbnails,
+  setThumbnailsFilms,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
 }: any) => {
   useEffect(() => {
     fetchCurrentPlanetsData(match.params.id)
+
+    return () => {
+      resetThumbnailsStore()
+    }
   }, [])
+
+  useEffect(() => {
+    if (currentPlanets) {
+      createThumbnailResponseDispatcher(
+        currentPlanets.films,
+        setThumbnailsFilms
+      )
+      createThumbnailResponseDispatcher(
+        currentPlanets.residents,
+        setThumbnailsPeople
+      )
+    }
+  }, [currentPlanets])
+
+  const enpointsOfThumbnails = {
+    films: currentPlanets?.films,
+    people: currentPlanets?.residents,
+  }
 
   return (
     <div className={s['card-wrapper']}>
@@ -66,20 +99,11 @@ const PlanetsDetails = ({
               </table>
             </div>
           </div>
-          <div className={s['additional-info']}>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Residents: </td>
-                  <td>{currentPlanets?.residents}</td>
-                </tr>
-                <tr>
-                  <td>Films: </td>
-                  <td>{currentPlanets?.films}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <ThumbnailsHolder
+            thumbnails={thumbnails}
+            rootLocation={match.url}
+            enpointsOfThumbnails={enpointsOfThumbnails}
+          />
         </>
       )}
     </div>
@@ -89,8 +113,12 @@ const PlanetsDetails = ({
 const mapStateToProps = (state: any) => ({
   currentPlanets: state.planetsReducer.currentPlanets,
   isFetching: state.globalReducer.isFetching,
+  thumbnails: state.thumbnailsReducer,
 })
 
 export const PlanetsDetailsContainer = connect(mapStateToProps, {
   fetchCurrentPlanetsData,
+  setThumbnailsFilms,
+  setThumbnailsPeople,
+  resetThumbnailsStore,
 })(PlanetsDetails)
