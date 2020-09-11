@@ -31,7 +31,7 @@ export const ThumbnailsHolder = ({
       </ul>
 
       <div className={s['thumbnails-holder']}>
-        <ul>
+        <ul className={s['thumbnails-info-list']}>
           {thumbnails[locationOfThumbnail] &&
             thumbnails[locationOfThumbnail].map((title: string[], idx: any) => {
               const link = enpointsOfThumbnails[locationOfThumbnail][idx]
@@ -39,7 +39,7 @@ export const ThumbnailsHolder = ({
                 .slice(-3)
                 .join('/')
               return (
-                <li key={title.toString()}>
+                <li key={title.toString()} className={s['info-list-item']}>
                   <Link to={`/${link}`} className={s['thumb-link']}>
                     {title}
                   </Link>
