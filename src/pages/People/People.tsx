@@ -51,7 +51,7 @@ const People: React.FC<PeopleProps> = ({
                 <CardMini
                   data={person}
                   key={person.name}
-                  dataUrl={`/${personUrl}`}
+                  dataUrl={`/${personUrl}/films`}
                 />
               )
             })}

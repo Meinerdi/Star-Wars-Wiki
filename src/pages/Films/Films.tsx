@@ -51,7 +51,7 @@ const Films: React.FC<FilmsProps> = ({
                 <CardMini
                   data={film}
                   key={film.title}
-                  dataUrl={`/${filmUrl}`}
+                  dataUrl={`/${filmUrl}/people`}
                 />
               )
             })}

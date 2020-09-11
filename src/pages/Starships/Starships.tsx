@@ -54,7 +54,7 @@ const Starships: React.FC<StarshipsProps> = ({
                 <CardMini
                   data={starship}
                   key={starship.name}
-                  dataUrl={`/${starshipUrl}`}
+                  dataUrl={`/${starshipUrl}/films`}
                 />
               )
             })}

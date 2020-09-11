@@ -51,7 +51,7 @@ const Planets: React.FC<PlanetsProps> = ({
                 <CardMini
                   data={planet}
                   key={planet.name}
-                  dataUrl={`/${planetUrl}`}
+                  dataUrl={`/${planetUrl}/films`}
                 />
               )
             })}

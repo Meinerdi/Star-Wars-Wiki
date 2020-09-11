@@ -51,7 +51,7 @@ const Species: React.FC<SpeciesProps> = ({
                 <CardMini
                   data={species}
                   key={species.name}
-                  dataUrl={`/${speciesUrl}`}
+                  dataUrl={`/${speciesUrl}/films`}
                 />
               )
             })}

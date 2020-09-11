@@ -51,7 +51,7 @@ const Vehicles: React.FC<VehiclesProps> = ({
                 <CardMini
                   data={vehicle}
                   key={vehicle.name}
-                  dataUrl={`/${vehicleUrl}`}
+                  dataUrl={`/${vehicleUrl}/films`}
                 />
               )
             })}
