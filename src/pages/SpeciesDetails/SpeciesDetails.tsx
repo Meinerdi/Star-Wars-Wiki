@@ -3,6 +3,12 @@ import { connect } from 'react-redux'
 import noImage from '../../assets/images/404.png'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { fetchCurrentSpeciesData } from '../../redux/actions/actionsSpecies'
+import {
+  setThumbnailsFilms,
+  setThumbnailsHomeworld,
+} from '../../redux/actions/actionsThumbnails'
+import { createThumbnailResponseDispatcher } from '../../utils/utils'
+import { ThumbnailsHolder } from '../../components/ThumbnailsHolder/ThumbnailsHolder'
 import s from './SpeciesDetails.module.scss'
 
 const SpeciesDetails = ({
@@ -10,10 +16,31 @@ const SpeciesDetails = ({
   fetchCurrentSpeciesData,
   currentSpecies,
   isFetching,
+  thumbnails,
+  setThumbnailsFilms,
+  setThumbnailsHomeworld,
 }: any) => {
   useEffect(() => {
     fetchCurrentSpeciesData(match.params.id)
   }, [])
+
+  useEffect(() => {
+    if (currentSpecies) {
+      createThumbnailResponseDispatcher(
+        currentSpecies.films,
+        setThumbnailsFilms
+      )
+      createThumbnailResponseDispatcher(
+        [currentSpecies.homeworld],
+        setThumbnailsHomeworld
+      )
+    }
+  }, [currentSpecies])
+
+  const enpointsOfThumbnails = {
+    films: currentSpecies?.films,
+    homeworld: [currentSpecies?.homeworld],
+  }
 
   return (
     <div className={s['card-wrapper']}>
@@ -66,24 +93,11 @@ const SpeciesDetails = ({
               </table>
             </div>
           </div>
-          <div className={s['additional-info']}>
-            <table>
-              <tbody>
-                <tr>
-                  <td>People: </td>
-                  <td>{currentSpecies?.people}</td>
-                </tr>
-                <tr>
-                  <td>Homeworld: </td>
-                  <td>{currentSpecies?.homeworld}</td>
-                </tr>
-                <tr>
-                  <td>Films: </td>
-                  <td>{currentSpecies?.films}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <ThumbnailsHolder
+            thumbnails={thumbnails}
+            rootLocation={match.url}
+            enpointsOfThumbnails={enpointsOfThumbnails}
+          />
         </>
       )}
     </div>
@@ -93,8 +107,11 @@ const SpeciesDetails = ({
 const mapStateToProps = (state: any) => ({
   currentSpecies: state.speciesReducer.currentSpecies,
   isFetching: state.globalReducer.isFetching,
+  thumbnails: state.thumbnailsReducer,
 })
 
 export const SpeciesDetailsContainer = connect(mapStateToProps, {
   fetchCurrentSpeciesData,
+  setThumbnailsFilms,
+  setThumbnailsHomeworld,
 })(SpeciesDetails)

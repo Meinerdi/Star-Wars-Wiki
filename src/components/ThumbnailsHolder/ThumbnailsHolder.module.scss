@@ -1,0 +1,48 @@
+.links-holder {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px 0 0;
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase;
+
+    &:hover {
+      color: rgba(133, 27, 27, 0.932);
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+  }
+}
+
+.thumbnails-wrapper {
+  display: flex;
+  background: rgba(24, 22, 22, 0.438);
+  padding: 30px 20px;
+}
+
+.thumb-link {
+  color: rgb(255, 255, 255);
+  font-size: 13px;
+
+  &:hover {
+    color: rgba(133, 27, 27, 0.932);
+    background: #fff;
+    transition: all 0.3s ease;
+  }
+}
+
+.nav-link.active-link {
+  background: rgb(104, 18, 18);
+}
+
+.nav-link {
+  padding: 5px;
+}
+
+.list-item {
+  margin: 0 0 3px;
+}

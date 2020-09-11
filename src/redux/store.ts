@@ -8,6 +8,7 @@ import { vehiclesReducer } from './reducers/vehiclesReducer'
 import { starshipsReducer } from './reducers/starshipsReducer'
 import { planetsReducer } from './reducers/planetsReducer'
 import { filmsReducer } from './reducers/filmsReducer'
+import { thumbnailsReducer } from './reducers/thumbnailsReducer'
 
 const rootReducer = combineReducers({
   peopleReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   starshipsReducer,
   planetsReducer,
   filmsReducer,
+  thumbnailsReducer,
 })
 
 export const store = createStore(

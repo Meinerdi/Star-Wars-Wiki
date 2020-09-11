@@ -3,7 +3,6 @@ import {
   SET_CURRENT_PEOPLE_DATA,
   SET_SERCHED_PEOPLE,
   SET_PEOPLE_PAGE,
-  SET_THUMBNAILS_FILMS,
 } from './types'
 import { API } from '../../api/api'
 import { setIsFetching } from './actionsGlobal'
@@ -25,11 +24,6 @@ const setSearchedPeople = (payload) => ({
 
 const setPeoplePage = (payload) => ({
   type: SET_PEOPLE_PAGE,
-  payload,
-})
-
-export const setThumbnailsFilms = (payload) => ({
-  type: SET_THUMBNAILS_FILMS,
   payload,
 })
 

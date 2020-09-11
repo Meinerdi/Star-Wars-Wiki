@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import noImage from '../../assets/images/404.png'
 import { Preloader } from '../../components/Preloader/Preloader'
+import { ThumbnailsHolder } from '../../components/ThumbnailsHolder/ThumbnailsHolder'
+import { fetchCurrentPeopleData } from '../../redux/actions/actionsPeople'
 import {
-  fetchCurrentPeopleData,
   setThumbnailsFilms,
-} from '../../redux/actions/actionsPeople'
+  setThumbnailsHomeworld,
+  setThumbnailsSpecies,
+  setThumbnailsStarships,
+  setThumbnailsVehicles,
+} from '../../redux/actions/actionsThumbnails'
 import { createThumbnailResponseDispatcher } from '../../utils/utils'
 import s from './PeopleDetails.module.scss'
 
@@ -15,8 +19,12 @@ const PeopleDetails = ({
   fetchCurrentPeopleData,
   currentPeople,
   isFetching,
+  thumbnails,
   setThumbnailsFilms,
-  thumbnailsPeople,
+  setThumbnailsHomeworld,
+  setThumbnailsStarships,
+  setThumbnailsVehicles,
+  setThumbnailsSpecies,
 }: any) => {
   useEffect(() => {
     fetchCurrentPeopleData(match.params.id)
@@ -25,8 +33,32 @@ const PeopleDetails = ({
   useEffect(() => {
     if (currentPeople) {
       createThumbnailResponseDispatcher(currentPeople.films, setThumbnailsFilms)
+      createThumbnailResponseDispatcher(
+        [currentPeople.homeworld],
+        setThumbnailsHomeworld
+      )
+      createThumbnailResponseDispatcher(
+        currentPeople.starships,
+        setThumbnailsStarships
+      )
+      createThumbnailResponseDispatcher(
+        currentPeople.vehicles,
+        setThumbnailsVehicles
+      )
+      createThumbnailResponseDispatcher(
+        currentPeople.species,
+        setThumbnailsSpecies
+      )
     }
   }, [currentPeople])
+
+  const enpointsOfThumbnails = {
+    films: currentPeople?.films,
+    homeworld: [currentPeople?.homeworld],
+    starships: currentPeople?.starships,
+    vehicles: currentPeople?.vehicles,
+    species: currentPeople?.species,
+  }
 
   return (
     <div className={s['card-wrapper']}>
@@ -79,48 +111,11 @@ const PeopleDetails = ({
               </table>
             </div>
           </div>
-          <div className={s['additional-info']}>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Films: </td>
-                  <td className={s['thumbnail-holder']}>
-                    {currentPeople?.films.map((i: any, idx: any) => {
-                      return (
-                        <Link
-                          to={`/${i.split('/').slice(-3).join('/')}`}
-                          className={s['card-thumbnail']}
-                        >
-                          {thumbnailsPeople.films &&
-                            thumbnailsPeople.films[idx]}
-                        </Link>
-                      )
-                    })}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Homeworld: </td>
-                  <td>{currentPeople?.homeworld}</td>
-                </tr>
-                <tr>
-                  <td>Starships: </td>
-                  <td>
-                    {!currentPeople?.starships.length
-                      ? 'Currently unknown'
-                      : currentPeople?.starships}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Vehicles: </td>
-                  <td>{currentPeople?.vehicles}</td>
-                </tr>
-                <tr>
-                  <td>Species: </td>
-                  <td>{currentPeople?.species}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <ThumbnailsHolder
+            thumbnails={thumbnails}
+            rootLocation={match.url}
+            enpointsOfThumbnails={enpointsOfThumbnails}
+          />
         </>
       )}
     </div>
@@ -130,12 +125,16 @@ const PeopleDetails = ({
 const mapStateToProps = (state: any) => {
   return {
     currentPeople: state.peopleReducer.currentPeople,
-    thumbnailsPeople: state.peopleReducer.thumbnailsPeople,
     isFetching: state.globalReducer.isFetching,
+    thumbnails: state.thumbnailsReducer,
   }
 }
 
 export const PeopleDetailsContainer = connect(mapStateToProps, {
   fetchCurrentPeopleData,
   setThumbnailsFilms,
+  setThumbnailsHomeworld,
+  setThumbnailsStarships,
+  setThumbnailsVehicles,
+  setThumbnailsSpecies,
 })(PeopleDetails)
