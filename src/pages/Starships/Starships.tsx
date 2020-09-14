@@ -11,7 +11,10 @@ import s from './Starships.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
-import { addStarshipsToFavorites } from '../../redux/actions/actionsFavorites'
+import {
+  addStarshipsToFavorites,
+  removeStarshipsFromFavorites,
+} from '../../redux/actions/actionsFavorites'
 
 interface StarshipsProps {
   fetchStarshipsData: () => void
@@ -20,6 +23,8 @@ interface StarshipsProps {
   fetchSearchedStarshipsData: () => void
   fetchStarshipsPageData: () => void
   addStarshipsToFavorites: any
+  removeStarshipsFromFavorites: any
+  favorites: any
 }
 
 const Starships: React.FC<StarshipsProps> = ({
@@ -29,6 +34,8 @@ const Starships: React.FC<StarshipsProps> = ({
   fetchSearchedStarshipsData,
   fetchStarshipsPageData,
   addStarshipsToFavorites,
+  removeStarshipsFromFavorites,
+  favorites,
 }) => {
   useEffect(() => {
     fetchStarshipsData()
@@ -38,6 +45,8 @@ const Starships: React.FC<StarshipsProps> = ({
   const linkForPreviousPagination = createLinkForPaginationControls(
     starships?.previous
   )
+
+  const favoritesInStarships = favorites.map((i: any) => i.url)
 
   return (
     <div className={s['starships-wrapper']}>
@@ -59,6 +68,10 @@ const Starships: React.FC<StarshipsProps> = ({
                   key={starship.name}
                   dataUrl={`/${starshipUrl}/films`}
                   setToFavoritesCallback={addStarshipsToFavorites}
+                  isFavorite={favoritesInStarships.some(
+                    (i: any) => i === starship.url
+                  )}
+                  removeFromFavoritesCallback={removeStarshipsFromFavorites}
                 />
               )
             })}
@@ -81,6 +94,7 @@ const Starships: React.FC<StarshipsProps> = ({
 const mapStateToProps = (state: any) => ({
   starships: state.starshipsReducer.starships,
   isFetching: state.globalReducer.isFetching,
+  favorites: state.favoritesReducer.starships,
 })
 
 export const StarshipsContainer = connect(mapStateToProps, {
@@ -88,4 +102,5 @@ export const StarshipsContainer = connect(mapStateToProps, {
   fetchSearchedStarshipsData,
   fetchStarshipsPageData,
   addStarshipsToFavorites,
+  removeStarshipsFromFavorites,
 })(Starships)

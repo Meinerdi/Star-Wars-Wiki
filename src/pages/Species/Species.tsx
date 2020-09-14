@@ -11,7 +11,10 @@ import s from './Species.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
-import { addSpeciesToFavorites } from '../../redux/actions/actionsFavorites'
+import {
+  addSpeciesToFavorites,
+  removeSpeciesFromFavorites,
+} from '../../redux/actions/actionsFavorites'
 
 interface SpeciesProps {
   fetchSpeciesData: () => void
@@ -20,6 +23,8 @@ interface SpeciesProps {
   species: any
   isFetching: boolean
   addSpeciesToFavorites: any
+  removeSpeciesFromFavorites: any
+  favorites: any
 }
 
 const Species: React.FC<SpeciesProps> = ({
@@ -29,6 +34,8 @@ const Species: React.FC<SpeciesProps> = ({
   species,
   isFetching,
   addSpeciesToFavorites,
+  favorites,
+  removeSpeciesFromFavorites,
 }) => {
   useEffect(() => {
     fetchSpeciesData()
@@ -38,6 +45,8 @@ const Species: React.FC<SpeciesProps> = ({
   const linkForPreviousPagination = createLinkForPaginationControls(
     species?.previous
   )
+
+  const favoritesInSpecies = favorites.map((i: any) => i.url)
 
   return (
     <div className={s['species-wrapper']}>
@@ -56,6 +65,10 @@ const Species: React.FC<SpeciesProps> = ({
                   key={species.name}
                   dataUrl={`/${speciesUrl}/films`}
                   setToFavoritesCallback={addSpeciesToFavorites}
+                  isFavorite={favoritesInSpecies.some(
+                    (i: any) => i === species.url
+                  )}
+                  removeFromFavoritesCallback={removeSpeciesFromFavorites}
                 />
               )
             })}
@@ -78,6 +91,7 @@ const Species: React.FC<SpeciesProps> = ({
 const mapStateToProps = (state: any) => ({
   species: state.speciesReducer.species,
   isFetching: state.globalReducer.isFetching,
+  favorites: state.favoritesReducer.species,
 })
 
 export const SpeciesContainer = connect(mapStateToProps, {
@@ -85,4 +99,5 @@ export const SpeciesContainer = connect(mapStateToProps, {
   fetchSearchedSpeciesData,
   fetchSpeciesPageData,
   addSpeciesToFavorites,
+  removeSpeciesFromFavorites,
 })(Species)

@@ -1,33 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import noImage from '../../assets/images/404.png'
-import s from './CardMini.module.scss'
+import s from './CardFavoriteMini.module.scss'
 
-export const CardMini = ({
+export const CardFavoriteMini = ({
   data,
   dataUrl,
   setToFavoritesCallback,
-  isFavorite,
-  removeFromFavoritesCallback,
-  location,
 }: any) => {
   const handleAddToFavorites = () => {
-    if (!isFavorite) {
-      setToFavoritesCallback(data)
-    }
-    if (isFavorite) {
-      removeFromFavoritesCallback(data, location)
-    }
+    setToFavoritesCallback(data)
   }
 
   return (
     <div className={s['card-holder']}>
       <button
-        className={
-          isFavorite
-            ? `${s['favorite-button']} ${s['is-favorite']}`
-            : s['favorite-button']
-        }
+        className={s['favorite-button']}
         aria-label="favorite"
         onClick={handleAddToFavorites}
       />

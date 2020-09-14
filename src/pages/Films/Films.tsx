@@ -11,7 +11,10 @@ import s from './Films.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
-import { addFilmsToFavorites } from '../../redux/actions/actionsFavorites'
+import {
+  addFilmsToFavorites,
+  removeFilmsFromFavorites,
+} from '../../redux/actions/actionsFavorites'
 
 interface FilmsProps {
   fetchFilmsData: () => void
@@ -20,6 +23,8 @@ interface FilmsProps {
   fetchSearchedFilmsData: () => void
   fetchFilmsPageData: () => void
   addFilmsToFavorites: any
+  removeFilmsFromFavorites: any
+  favorites: any
 }
 
 const Films: React.FC<FilmsProps> = ({
@@ -29,6 +34,8 @@ const Films: React.FC<FilmsProps> = ({
   fetchSearchedFilmsData,
   fetchFilmsPageData,
   addFilmsToFavorites,
+  removeFilmsFromFavorites,
+  favorites,
 }) => {
   useEffect(() => {
     fetchFilmsData()
@@ -38,6 +45,8 @@ const Films: React.FC<FilmsProps> = ({
   const linkForPreviousPagination = createLinkForPaginationControls(
     films?.previous
   )
+
+  const favoritesInFilms = favorites.map((i: any) => i.url)
 
   return (
     <div className={s['films-wrapper']}>
@@ -56,6 +65,8 @@ const Films: React.FC<FilmsProps> = ({
                   key={film.title}
                   dataUrl={`/${filmUrl}/people`}
                   setToFavoritesCallback={addFilmsToFavorites}
+                  isFavorite={favoritesInFilms.some((i: any) => i === film.url)}
+                  removeFromFavoritesCallback={removeFilmsFromFavorites}
                 />
               )
             })}
@@ -78,6 +89,7 @@ const Films: React.FC<FilmsProps> = ({
 const mapStateToProps = (state: any) => ({
   films: state.filmsReducer.films,
   isFetching: state.globalReducer.isFetching,
+  favorites: state.favoritesReducer.films,
 })
 
 export const FilmsContainer = connect(mapStateToProps, {
@@ -85,4 +97,5 @@ export const FilmsContainer = connect(mapStateToProps, {
   fetchSearchedFilmsData,
   fetchFilmsPageData,
   addFilmsToFavorites,
+  removeFilmsFromFavorites,
 })(Films)

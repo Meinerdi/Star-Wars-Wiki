@@ -11,7 +11,10 @@ import s from './Planets.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
-import { addPlanetsToFavorites } from '../../redux/actions/actionsFavorites'
+import {
+  addPlanetsToFavorites,
+  removePlanetsFromFavorites,
+} from '../../redux/actions/actionsFavorites'
 
 interface PlanetsProps {
   fetchPlanetsData: () => void
@@ -20,6 +23,8 @@ interface PlanetsProps {
   fetchSearchedPlanetsData: () => void
   fetchPlanetsPageData: () => void
   addPlanetsToFavorites: any
+  removePlanetsFromFavorites: any
+  favorites: any
 }
 
 const Planets: React.FC<PlanetsProps> = ({
@@ -29,6 +34,8 @@ const Planets: React.FC<PlanetsProps> = ({
   fetchSearchedPlanetsData,
   fetchPlanetsPageData,
   addPlanetsToFavorites,
+  removePlanetsFromFavorites,
+  favorites,
 }) => {
   useEffect(() => {
     fetchPlanetsData()
@@ -38,6 +45,8 @@ const Planets: React.FC<PlanetsProps> = ({
   const linkForPreviousPagination = createLinkForPaginationControls(
     planets?.previous
   )
+
+  const favoritesInPlanets = favorites.map((i: any) => i.url)
 
   return (
     <div className={s['planets-wrapper']}>
@@ -56,6 +65,10 @@ const Planets: React.FC<PlanetsProps> = ({
                   key={planet.name}
                   dataUrl={`/${planetUrl}/films`}
                   setToFavoritesCallback={addPlanetsToFavorites}
+                  isFavorite={favoritesInPlanets.some(
+                    (i: any) => i === planet.url
+                  )}
+                  removeFromFavoritesCallback={removePlanetsFromFavorites}
                 />
               )
             })}
@@ -78,6 +91,7 @@ const Planets: React.FC<PlanetsProps> = ({
 const mapStateToProps = (state: any) => ({
   planets: state.planetsReducer.planets,
   isFetching: state.globalReducer.isFetching,
+  favorites: state.favoritesReducer.planets,
 })
 
 export const PlanetsContainer = connect(mapStateToProps, {
@@ -85,4 +99,5 @@ export const PlanetsContainer = connect(mapStateToProps, {
   fetchSearchedPlanetsData,
   fetchPlanetsPageData,
   addPlanetsToFavorites,
+  removePlanetsFromFavorites,
 })(Planets)

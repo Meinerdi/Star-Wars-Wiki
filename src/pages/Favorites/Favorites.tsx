@@ -1,66 +1,51 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import s from './Favorites.module.scss'
+import { useSelector, useDispatch } from 'react-redux'
+import { NavLink, useLocation } from 'react-router-dom'
 import { CardMini } from '../../components/CardMini/CardMini'
+import s from './Favorites.module.scss'
+import { removeFavoritesFromFavoritesPage } from '../../redux/actions/actionsFavorites'
 
 export const Favorites = () => {
   const favorites = useSelector((state: any) => state.favoritesReducer)
+  const location = useLocation().pathname.split('/').slice(-1).join('')
+  const dispatch = useDispatch()
+
+  const handleRemoveFromFavorites = (item: any, key: any) => {
+    dispatch(removeFavoritesFromFavoritesPage(item, key))
+  }
 
   return (
-    <div className={s['favorites-wrrapper']}>
-      <div className={s['people-holder']}>
-        <p>Favorite People</p>
-        {favorites.people.map((i: any) => {
-          const cardUrl = i.url.split('/').slice(-3, -1).join('/')
-          return (
-            <CardMini data={i} key={i.name} dataUrl={`/${cardUrl}/films`} />
-          )
-        })}
-      </div>
-      <div className={s['species-holder']}>
-        <p>Favorite Species</p>
-        {favorites.species.map((i: any) => {
-          const cardUrl = i.url.split('/').slice(-3, -1).join('/')
-          return (
-            <CardMini data={i} key={i.name} dataUrl={`/${cardUrl}/films`} />
-          )
-        })}
-      </div>
-      <div className={s['vehicles-holder']}>
-        <p>Favorite Vehicles</p>
-        {favorites.vehicles.map((i: any) => {
-          const cardUrl = i.url.split('/').slice(-3, -1).join('/')
-          return (
-            <CardMini data={i} key={i.name} dataUrl={`/${cardUrl}/films`} />
-          )
-        })}
-      </div>
-      <div className={s['starships-holder']}>
-        <p>Favorite Starships</p>
-        {favorites.starships.map((i: any) => {
-          const cardUrl = i.url.split('/').slice(-3, -1).join('/')
-          return (
-            <CardMini data={i} key={i.name} dataUrl={`/${cardUrl}/films`} />
-          )
-        })}
-      </div>
-      <div className={s['planets-holder']}>
-        <p>Favorite Planets</p>
-        {favorites.planets.map((i: any) => {
-          const cardUrl = i.url.split('/').slice(-3, -1).join('/')
-          return (
-            <CardMini data={i} key={i.name} dataUrl={`/${cardUrl}/films`} />
-          )
-        })}
-      </div>
-      <div className={s['films-holder']}>
-        <p>Favorite Films</p>
-        {favorites.films.map((i: any) => {
-          const cardUrl = i.url.split('/').slice(-3, -1).join('/')
-          return (
-            <CardMini data={i} key={i.name} dataUrl={`/${cardUrl}/people`} />
-          )
-        })}
+    <div className={s['favorites-wrapper']}>
+      <nav className={s['links-nav']}>
+        <ul className={s['links-list']}>
+          {Object.keys(favorites).map((i) => (
+            <li key={i}>
+              <NavLink
+                to={`/favorites/${i}`}
+                activeClassName={s['active-favorite-link']}
+              >
+                {i.toUpperCase()}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div className={s['favorites-holder']}>
+        <div className={s['favorites-cards-inner']}>
+          {favorites[location]?.map((i: any) => {
+            const cardUrl = i.url.split('/').slice(-3, -1).join('/')
+            return (
+              <CardMini
+                data={i}
+                key={i.name}
+                dataUrl={`/${cardUrl}/`}
+                isFavorite
+                removeFromFavoritesCallback={handleRemoveFromFavorites}
+                location={location}
+              />
+            )
+          })}
+        </div>
       </div>
     </div>
   )

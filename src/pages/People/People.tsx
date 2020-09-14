@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 import { CardMini } from '../../components/CardMini/CardMini'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { Preloader } from '../../components/Preloader/Preloader'
-import { addPeopleToFavorites } from '../../redux/actions/actionsFavorites'
+import {
+  addPeopleToFavorites,
+  removePeopleFromFavorites,
+} from '../../redux/actions/actionsFavorites'
 import {
   fetchPeopleData,
   fetchPeoplePageData,
@@ -20,6 +23,8 @@ interface PeopleProps {
   fetchSearchedPeopleData: () => void
   fetchPeoplePageData: () => void
   addPeopleToFavorites: any
+  favorites: any
+  removePeopleFromFavorites: any
 }
 
 const People: React.FC<PeopleProps> = ({
@@ -29,6 +34,8 @@ const People: React.FC<PeopleProps> = ({
   fetchSearchedPeopleData,
   fetchPeoplePageData,
   addPeopleToFavorites,
+  favorites,
+  removePeopleFromFavorites,
 }) => {
   useEffect(() => {
     fetchPeopleData()
@@ -38,6 +45,8 @@ const People: React.FC<PeopleProps> = ({
   const linkForPreviousPagination = createLinkForPaginationControls(
     people?.previous
   )
+
+  const favoritesInPeople = favorites.map((i: any) => i.url)
 
   return (
     <div className={s['people-wrapper']}>
@@ -56,6 +65,10 @@ const People: React.FC<PeopleProps> = ({
                   key={person.name}
                   dataUrl={`/${personUrl}/films`}
                   setToFavoritesCallback={addPeopleToFavorites}
+                  isFavorite={favoritesInPeople.some(
+                    (i: any) => i === person.url
+                  )}
+                  removeFromFavoritesCallback={removePeopleFromFavorites}
                 />
               )
             })}
@@ -78,6 +91,7 @@ const People: React.FC<PeopleProps> = ({
 const mapStateToProps = (state: any) => ({
   people: state.peopleReducer.people,
   isFetching: state.globalReducer.isFetching,
+  favorites: state.favoritesReducer.people,
 })
 
 export const PeopleContainer = connect(mapStateToProps, {
@@ -85,4 +99,5 @@ export const PeopleContainer = connect(mapStateToProps, {
   fetchSearchedPeopleData,
   fetchPeoplePageData,
   addPeopleToFavorites,
+  removePeopleFromFavorites,
 })(People)

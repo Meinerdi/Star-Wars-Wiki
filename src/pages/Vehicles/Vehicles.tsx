@@ -11,7 +11,10 @@ import s from './Vehicles.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
-import { addVehiclesToFavorites } from '../../redux/actions/actionsFavorites'
+import {
+  addVehiclesToFavorites,
+  removeVehiclesFromFavorites,
+} from '../../redux/actions/actionsFavorites'
 
 interface VehiclesProps {
   fetchVehiclesData: () => void
@@ -20,6 +23,8 @@ interface VehiclesProps {
   fetchSearchedVehiclesData: () => void
   fetchVehiclesPageData: () => void
   addVehiclesToFavorites: any
+  removeVehiclesFromFavorites: any
+  favorites: any
 }
 
 const Vehicles: React.FC<VehiclesProps> = ({
@@ -29,6 +34,8 @@ const Vehicles: React.FC<VehiclesProps> = ({
   fetchSearchedVehiclesData,
   fetchVehiclesPageData,
   addVehiclesToFavorites,
+  favorites,
+  removeVehiclesFromFavorites,
 }) => {
   useEffect(() => {
     fetchVehiclesData()
@@ -38,6 +45,8 @@ const Vehicles: React.FC<VehiclesProps> = ({
   const linkForPreviousPagination = createLinkForPaginationControls(
     vehicles?.previous
   )
+
+  const favoritesInVehicles = favorites.map((i: any) => i.url)
 
   return (
     <div className={s['vehicles-wrapper']}>
@@ -56,6 +65,10 @@ const Vehicles: React.FC<VehiclesProps> = ({
                   key={vehicle.name}
                   dataUrl={`/${vehicleUrl}/films`}
                   setToFavoritesCallback={addVehiclesToFavorites}
+                  isFavorite={favoritesInVehicles.some(
+                    (i: any) => i === vehicle.url
+                  )}
+                  removeFromFavoritesCallback={removeVehiclesFromFavorites}
                 />
               )
             })}
@@ -78,6 +91,7 @@ const Vehicles: React.FC<VehiclesProps> = ({
 const mapStateToProps = (state: any) => ({
   vehicles: state.vehiclesReducer.vehicles,
   isFetching: state.globalReducer.isFetching,
+  favorites: state.favoritesReducer.vehicles,
 })
 
 export const VehiclesContainer = connect(mapStateToProps, {
@@ -85,4 +99,5 @@ export const VehiclesContainer = connect(mapStateToProps, {
   fetchSearchedVehiclesData,
   fetchVehiclesPageData,
   addVehiclesToFavorites,
+  removeVehiclesFromFavorites,
 })(Vehicles)
