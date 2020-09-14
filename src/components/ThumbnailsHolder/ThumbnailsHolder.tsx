@@ -38,6 +38,8 @@ export const ThumbnailsHolder = ({
                 .split('/')
                 .slice(-3)
                 .join('/')
+                .slice(0, -1)
+
               return (
                 <li key={title.toString()} className={s['info-list-item']}>
                   <Link to={`/${link}`} className={s['thumb-link']}>
