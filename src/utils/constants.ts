@@ -5,4 +5,5 @@ export const menuPages = [
   'Starships',
   'Planets',
   'Films',
+  'Favorites',
 ]

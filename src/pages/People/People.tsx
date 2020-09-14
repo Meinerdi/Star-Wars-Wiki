@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { CardMini } from '../../components/CardMini/CardMini'
+import { Pagination } from '../../components/Pagination/Pagination'
+import { Preloader } from '../../components/Preloader/Preloader'
+import { addPeopleToFavorites } from '../../redux/actions/actionsFavorites'
 import {
   fetchPeopleData,
-  fetchSearchedPeopleData,
   fetchPeoplePageData,
+  fetchSearchedPeopleData,
 } from '../../redux/actions/actionsPeople'
 import { MainSearchField } from '../../stories/SearchField.stories'
-import s from './People.module.scss'
-import { Preloader } from '../../components/Preloader/Preloader'
-import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
+import s from './People.module.scss'
 
 interface PeopleProps {
   fetchPeopleData: () => void
@@ -18,6 +19,7 @@ interface PeopleProps {
   isFetching: boolean
   fetchSearchedPeopleData: () => void
   fetchPeoplePageData: () => void
+  addPeopleToFavorites: any
 }
 
 const People: React.FC<PeopleProps> = ({
@@ -26,6 +28,7 @@ const People: React.FC<PeopleProps> = ({
   isFetching,
   fetchSearchedPeopleData,
   fetchPeoplePageData,
+  addPeopleToFavorites,
 }) => {
   useEffect(() => {
     fetchPeopleData()
@@ -52,6 +55,7 @@ const People: React.FC<PeopleProps> = ({
                   data={person}
                   key={person.name}
                   dataUrl={`/${personUrl}/films`}
+                  setToFavoritesCallback={addPeopleToFavorites}
                 />
               )
             })}
@@ -80,4 +84,5 @@ export const PeopleContainer = connect(mapStateToProps, {
   fetchPeopleData,
   fetchSearchedPeopleData,
   fetchPeoplePageData,
+  addPeopleToFavorites,
 })(People)
