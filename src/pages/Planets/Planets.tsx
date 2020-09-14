@@ -11,6 +11,7 @@ import s from './Planets.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
+import { addPlanetsToFavorites } from '../../redux/actions/actionsFavorites'
 
 interface PlanetsProps {
   fetchPlanetsData: () => void
@@ -18,6 +19,7 @@ interface PlanetsProps {
   isFetching: boolean
   fetchSearchedPlanetsData: () => void
   fetchPlanetsPageData: () => void
+  addPlanetsToFavorites: any
 }
 
 const Planets: React.FC<PlanetsProps> = ({
@@ -26,6 +28,7 @@ const Planets: React.FC<PlanetsProps> = ({
   isFetching,
   fetchSearchedPlanetsData,
   fetchPlanetsPageData,
+  addPlanetsToFavorites,
 }) => {
   useEffect(() => {
     fetchPlanetsData()
@@ -52,6 +55,7 @@ const Planets: React.FC<PlanetsProps> = ({
                   data={planet}
                   key={planet.name}
                   dataUrl={`/${planetUrl}/films`}
+                  setToFavoritesCallback={addPlanetsToFavorites}
                 />
               )
             })}
@@ -80,4 +84,5 @@ export const PlanetsContainer = connect(mapStateToProps, {
   fetchPlanetsData,
   fetchSearchedPlanetsData,
   fetchPlanetsPageData,
+  addPlanetsToFavorites,
 })(Planets)

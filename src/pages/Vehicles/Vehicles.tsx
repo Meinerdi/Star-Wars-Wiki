@@ -11,6 +11,7 @@ import s from './Vehicles.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
+import { addVehiclesToFavorites } from '../../redux/actions/actionsFavorites'
 
 interface VehiclesProps {
   fetchVehiclesData: () => void
@@ -18,6 +19,7 @@ interface VehiclesProps {
   isFetching: boolean
   fetchSearchedVehiclesData: () => void
   fetchVehiclesPageData: () => void
+  addVehiclesToFavorites: any
 }
 
 const Vehicles: React.FC<VehiclesProps> = ({
@@ -26,6 +28,7 @@ const Vehicles: React.FC<VehiclesProps> = ({
   isFetching,
   fetchSearchedVehiclesData,
   fetchVehiclesPageData,
+  addVehiclesToFavorites,
 }) => {
   useEffect(() => {
     fetchVehiclesData()
@@ -52,6 +55,7 @@ const Vehicles: React.FC<VehiclesProps> = ({
                   data={vehicle}
                   key={vehicle.name}
                   dataUrl={`/${vehicleUrl}/films`}
+                  setToFavoritesCallback={addVehiclesToFavorites}
                 />
               )
             })}
@@ -80,4 +84,5 @@ export const VehiclesContainer = connect(mapStateToProps, {
   fetchVehiclesData,
   fetchSearchedVehiclesData,
   fetchVehiclesPageData,
+  addVehiclesToFavorites,
 })(Vehicles)

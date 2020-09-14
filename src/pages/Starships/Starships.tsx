@@ -11,6 +11,7 @@ import s from './Starships.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
+import { addStarshipsToFavorites } from '../../redux/actions/actionsFavorites'
 
 interface StarshipsProps {
   fetchStarshipsData: () => void
@@ -18,6 +19,7 @@ interface StarshipsProps {
   isFetching: boolean
   fetchSearchedStarshipsData: () => void
   fetchStarshipsPageData: () => void
+  addStarshipsToFavorites: any
 }
 
 const Starships: React.FC<StarshipsProps> = ({
@@ -26,6 +28,7 @@ const Starships: React.FC<StarshipsProps> = ({
   isFetching,
   fetchSearchedStarshipsData,
   fetchStarshipsPageData,
+  addStarshipsToFavorites,
 }) => {
   useEffect(() => {
     fetchStarshipsData()
@@ -55,6 +58,7 @@ const Starships: React.FC<StarshipsProps> = ({
                   data={starship}
                   key={starship.name}
                   dataUrl={`/${starshipUrl}/films`}
+                  setToFavoritesCallback={addStarshipsToFavorites}
                 />
               )
             })}
@@ -83,4 +87,5 @@ export const StarshipsContainer = connect(mapStateToProps, {
   fetchStarshipsData,
   fetchSearchedStarshipsData,
   fetchStarshipsPageData,
+  addStarshipsToFavorites,
 })(Starships)

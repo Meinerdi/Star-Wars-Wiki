@@ -11,6 +11,7 @@ import s from './Films.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
+import { addFilmsToFavorites } from '../../redux/actions/actionsFavorites'
 
 interface FilmsProps {
   fetchFilmsData: () => void
@@ -18,6 +19,7 @@ interface FilmsProps {
   isFetching: boolean
   fetchSearchedFilmsData: () => void
   fetchFilmsPageData: () => void
+  addFilmsToFavorites: any
 }
 
 const Films: React.FC<FilmsProps> = ({
@@ -26,6 +28,7 @@ const Films: React.FC<FilmsProps> = ({
   isFetching,
   fetchSearchedFilmsData,
   fetchFilmsPageData,
+  addFilmsToFavorites,
 }) => {
   useEffect(() => {
     fetchFilmsData()
@@ -52,6 +55,7 @@ const Films: React.FC<FilmsProps> = ({
                   data={film}
                   key={film.title}
                   dataUrl={`/${filmUrl}/people`}
+                  setToFavoritesCallback={addFilmsToFavorites}
                 />
               )
             })}
@@ -80,4 +84,5 @@ export const FilmsContainer = connect(mapStateToProps, {
   fetchFilmsData,
   fetchSearchedFilmsData,
   fetchFilmsPageData,
+  addFilmsToFavorites,
 })(Films)

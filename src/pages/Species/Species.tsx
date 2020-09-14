@@ -11,6 +11,7 @@ import s from './Species.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
+import { addSpeciesToFavorites } from '../../redux/actions/actionsFavorites'
 
 interface SpeciesProps {
   fetchSpeciesData: () => void
@@ -18,6 +19,7 @@ interface SpeciesProps {
   fetchSearchedSpeciesData: any
   species: any
   isFetching: boolean
+  addSpeciesToFavorites: any
 }
 
 const Species: React.FC<SpeciesProps> = ({
@@ -26,6 +28,7 @@ const Species: React.FC<SpeciesProps> = ({
   fetchSearchedSpeciesData,
   species,
   isFetching,
+  addSpeciesToFavorites,
 }) => {
   useEffect(() => {
     fetchSpeciesData()
@@ -52,6 +55,7 @@ const Species: React.FC<SpeciesProps> = ({
                   data={species}
                   key={species.name}
                   dataUrl={`/${speciesUrl}/films`}
+                  setToFavoritesCallback={addSpeciesToFavorites}
                 />
               )
             })}
@@ -80,4 +84,5 @@ export const SpeciesContainer = connect(mapStateToProps, {
   fetchSpeciesData,
   fetchSearchedSpeciesData,
   fetchSpeciesPageData,
+  addSpeciesToFavorites,
 })(Species)
