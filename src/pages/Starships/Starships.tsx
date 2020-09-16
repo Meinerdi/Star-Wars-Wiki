@@ -22,9 +22,9 @@ interface StarshipsProps {
   isFetching: boolean
   fetchSearchedStarshipsData: () => void
   fetchStarshipsPageData: () => void
-  addStarshipsToFavorites: any
-  removeStarshipsFromFavorites: any
-  favorites: any
+  addStarshipsToFavorites: () => void
+  removeStarshipsFromFavorites: () => void
+  favorites: []
 }
 
 const Starships: React.FC<StarshipsProps> = ({
@@ -46,7 +46,9 @@ const Starships: React.FC<StarshipsProps> = ({
     starships?.previous
   )
 
-  const favoritesInStarships = favorites.map((i: any) => i.url)
+  const favoritesInStarships = favorites.map(
+    (i: Record<string, unknown>) => i.url
+  )
 
   return (
     <div className={s['starships-wrapper']}>

@@ -12,10 +12,18 @@ const initialState = {
 
 type ActionType = {
   type: string
-  payload: any
+  payload: Record<string, unknown>
 }
 
-export const vehiclesReducer = (state = initialState, action: ActionType) => {
+type State = {
+  vehicles: null | []
+  currentVehicles: null | []
+}
+
+export const vehiclesReducer = (
+  state: State = initialState,
+  action: ActionType
+) => {
   switch (action.type) {
     case SET_VEHICLES_DATA:
       return {

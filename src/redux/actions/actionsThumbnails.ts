@@ -8,31 +8,31 @@ import {
   RESET_THUMBNAILS_STORE,
 } from './types'
 
-export const setThumbnailsFilms = (payload: any) => ({
+export const setThumbnailsFilms = (payload: Record<string, unknown>) => ({
   type: SET_THUMBNAILS_FILMS,
   payload,
 })
-export const setThumbnailsHomeworld = (payload: any) => ({
+export const setThumbnailsHomeworld = (payload: Record<string, unknown>) => ({
   type: SET_THUMBNAILS_HOMEWORLD,
   payload,
 })
-export const setThumbnailsStarships = (payload: any) => ({
+export const setThumbnailsStarships = (payload: Record<string, unknown>) => ({
   type: SET_THUMBNAILS_STARSHIPS,
   payload,
 })
-export const setThumbnailsVehicles = (payload: any) => ({
+export const setThumbnailsVehicles = (payload: Record<string, unknown>) => ({
   type: SET_THUMBNAILS_VEHICLES,
   payload,
 })
-export const setThumbnailsSpecies = (payload: any) => ({
+export const setThumbnailsSpecies = (payload: Record<string, unknown>) => ({
   type: SET_THUMBNAILS_SPECIES,
   payload,
 })
-export const setThumbnailsPeople = (payload: any) => ({
+export const setThumbnailsPeople = (payload: Record<string, unknown>) => ({
   type: SET_THUMBNAILS_PEOPLE,
   payload,
 })
-export const resetThumbnailsStore = (payload: any) => ({
+export const resetThumbnailsStore = (payload: Record<string, unknown>) => ({
   type: RESET_THUMBNAILS_STORE,
   payload,
 })

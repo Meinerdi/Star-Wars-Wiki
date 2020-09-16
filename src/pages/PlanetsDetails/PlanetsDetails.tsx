@@ -12,7 +12,18 @@ import {
 } from '../../redux/actions/actionsThumbnails'
 import { createThumbnailResponseDispatcher } from '../../utils/utils'
 
-const PlanetsDetails = ({
+type Props = {
+  match: any
+  fetchCurrentPlanetsData: (planetId: number) => void
+  currentPlanets: any
+  isFetching: boolean
+  thumbnails: any
+  setThumbnailsFilms: (payload: any) => void
+  setThumbnailsPeople: (payload: any) => void
+  resetThumbnailsStore: (payload?: any) => void
+}
+
+const PlanetsDetails: React.FC<Props> = ({
   match,
   fetchCurrentPlanetsData,
   currentPlanets,
@@ -21,7 +32,7 @@ const PlanetsDetails = ({
   setThumbnailsFilms,
   setThumbnailsPeople,
   resetThumbnailsStore,
-}: any) => {
+}) => {
   useEffect(() => {
     fetchCurrentPlanetsData(match.params.id)
 

@@ -15,7 +15,21 @@ import {
 import { createThumbnailResponseDispatcher } from '../../utils/utils'
 import s from './PeopleDetails.module.scss'
 
-const PeopleDetails = ({
+type Props = {
+  match: any
+  fetchCurrentPeopleData: (userId: number) => void
+  currentPeople: any
+  isFetching: boolean
+  thumbnails: Record<string, unknown>
+  setThumbnailsFilms: (payload: any) => void
+  setThumbnailsHomeworld: (payload: any) => void
+  setThumbnailsStarships: (payload: any) => void
+  setThumbnailsVehicles: (payload: any) => void
+  setThumbnailsSpecies: (payload: any) => void
+  resetThumbnailsStore: (payload?: any) => void
+}
+
+const PeopleDetails: React.FC<Props> = ({
   match,
   fetchCurrentPeopleData,
   currentPeople,
@@ -27,14 +41,14 @@ const PeopleDetails = ({
   setThumbnailsVehicles,
   setThumbnailsSpecies,
   resetThumbnailsStore,
-}: any) => {
+}) => {
   useEffect(() => {
     fetchCurrentPeopleData(match.params.id)
 
     return () => {
       resetThumbnailsStore()
     }
-  }, [])
+  }, [fetchCurrentPeopleData])
 
   useEffect(() => {
     if (currentPeople) {

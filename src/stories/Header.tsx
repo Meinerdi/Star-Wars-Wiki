@@ -3,7 +3,7 @@ import React from 'react'
 import s from './Header.module.scss'
 
 export interface HeaderProps {
-  logo: any
+  logo: string
 }
 
 export const Header: React.FC<HeaderProps> = ({ logo }) => {

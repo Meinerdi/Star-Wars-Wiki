@@ -12,10 +12,18 @@ const initialState = {
 
 type ActionType = {
   type: string
-  payload: any
+  payload: Record<string, unknown>
 }
 
-export const filmsReducer = (state = initialState, action: ActionType) => {
+type State = {
+  films: null | []
+  currentFilms: null | []
+}
+
+export const filmsReducer = (
+  state: State = initialState,
+  action: ActionType
+) => {
   switch (action.type) {
     case SET_FILMS_DATA:
       return {

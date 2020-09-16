@@ -3,14 +3,26 @@ import { Link } from 'react-router-dom'
 import noImage from '../../assets/images/404.png'
 import s from './CardMini.module.scss'
 
-export const CardMini = ({
+type Props = {
+  dataUrl: string
+  data: any
+  setToFavoritesCallback?: any
+  isFavorite: boolean
+  location?: string | undefined
+  removeFromFavoritesCallback: (
+    data: Record<string, unknown>,
+    location: string | undefined
+  ) => void
+}
+
+export const CardMini: React.FC<Props> = ({
   data,
   dataUrl,
   setToFavoritesCallback,
   isFavorite,
   removeFromFavoritesCallback,
   location,
-}: any) => {
+}) => {
   const handleAddToFavorites = () => {
     if (!isFavorite) {
       setToFavoritesCallback(data)

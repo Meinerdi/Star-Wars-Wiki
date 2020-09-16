@@ -24,7 +24,18 @@ const initialState = {
   films: [],
 }
 
-export const favoritesReducer = (state = initialState, action: any) => {
+type Action = Record<string, any> & { key: keyof State }
+
+type State = {
+  people: []
+  species: []
+  vehicles: []
+  starships: []
+  planets: []
+  films: []
+}
+
+export const favoritesReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case ADD_PEOPLE_TO_FAVORITES:
       return {
@@ -65,48 +76,55 @@ export const favoritesReducer = (state = initialState, action: any) => {
     case REMOVE_PEOPLE_FROM_FAVORITES:
       return {
         ...state,
-        people: state.people.filter((i: any) => i.name !== action.payload.name),
+        people: state.people.filter(
+          (i: Record<string, unknown>) => i.name !== action.payload.name
+        ),
       }
     case REMOVE_SPECIES_FROM_FAVORITES:
       return {
         ...state,
         species: state.species.filter(
-          (i: any) => i.name !== action.payload.name
+          (i: Record<string, unknown>) => i.name !== action.payload.name
         ),
       }
     case REMOVE_VEHICLES_FROM_FAVORITES:
       return {
         ...state,
         vehicles: state.vehicles.filter(
-          (i: any) => i.name !== action.payload.name
+          (i: Record<string, unknown>) => i.name !== action.payload.name
         ),
       }
     case REMOVE_STARSHIPS_FROM_FAVORITES:
       return {
         ...state,
         starships: state.starships.filter(
-          (i: any) => i.name !== action.payload.name
+          (i: Record<string, unknown>) => i.name !== action.payload.name
         ),
       }
     case REMOVE_PLANETS_FROM_FAVORITES:
       return {
         ...state,
         planets: state.planets.filter(
-          (i: any) => i.name !== action.payload.name
+          (i: Record<string, unknown>) => i.name !== action.payload.name
         ),
       }
     case REMOVE_FILMS_FROM_FAVORITES:
       return {
         ...state,
-        films: state.films.filter((i: any) => i.title !== action.payload.title),
+        films: state.films.filter(
+          (i: Record<string, unknown>) => i.title !== action.payload.title
+        ),
       }
 
     case REMOVE_FAVORITES_FROM_FAVORITES_PAGE:
       return {
         ...state,
-        // [action.key]: state[action.key].filter(
-        //   (i: any) => i.name !== action.item.name
-        // ),
+        [action.key]: state[action.key].filter((i: Record<string, unknown>) => {
+          if (action.key === 'films') {
+            return i.title !== action.item.title
+          }
+          return i.name !== action.item.name
+        }),
       }
 
     default:

@@ -12,10 +12,18 @@ const initialState = {
 
 type ActionType = {
   type: string
-  payload: any
+  payload: Record<string, unknown>
 }
 
-export const speciesReducer = (state = initialState, action: ActionType) => {
+type State = {
+  species: null | []
+  currentSpecies: null | []
+}
+
+export const speciesReducer = (
+  state: State = initialState,
+  action: ActionType
+) => {
   switch (action.type) {
     case SET_SPECIES_DATA:
       return {

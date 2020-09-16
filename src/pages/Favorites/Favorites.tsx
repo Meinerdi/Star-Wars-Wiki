@@ -1,16 +1,17 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
 import { CardMini } from '../../components/CardMini/CardMini'
-import s from './Favorites.module.scss'
 import { removeFavoritesFromFavoritesPage } from '../../redux/actions/actionsFavorites'
+import s from './Favorites.module.scss'
+import { RootState } from '../../redux/store'
 
 export const Favorites = () => {
-  const favorites = useSelector((state: any) => state.favoritesReducer)
+  const favorites = useSelector((state: RootState) => state.favoritesReducer)
   const location = useLocation().pathname.split('/').slice(-1).join('')
   const dispatch = useDispatch()
 
-  const handleRemoveFromFavorites = (item: any, key: any) => {
+  const handleRemoveFromFavorites = (item: any, key: string | undefined) => {
     dispatch(removeFavoritesFromFavoritesPage(item, key))
   }
 

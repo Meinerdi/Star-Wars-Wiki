@@ -18,13 +18,13 @@ import {
 
 interface FilmsProps {
   fetchFilmsData: () => void
-  films: any
+  films: any | null
   isFetching: boolean
   fetchSearchedFilmsData: () => void
   fetchFilmsPageData: () => void
-  addFilmsToFavorites: any
-  removeFilmsFromFavorites: any
-  favorites: any
+  addFilmsToFavorites: () => void
+  removeFilmsFromFavorites: () => void
+  favorites: []
 }
 
 const Films: React.FC<FilmsProps> = ({
@@ -65,7 +65,9 @@ const Films: React.FC<FilmsProps> = ({
                   key={film.title}
                   dataUrl={`/${filmUrl}/people`}
                   setToFavoritesCallback={addFilmsToFavorites}
-                  isFavorite={favoritesInFilms.some((i: any) => i === film.url)}
+                  isFavorite={favoritesInFilms.some(
+                    (i: string) => i === film.url
+                  )}
                   removeFromFavoritesCallback={removeFilmsFromFavorites}
                 />
               )

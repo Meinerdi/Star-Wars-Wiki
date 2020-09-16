@@ -22,9 +22,9 @@ interface VehiclesProps {
   isFetching: boolean
   fetchSearchedVehiclesData: () => void
   fetchVehiclesPageData: () => void
-  addVehiclesToFavorites: any
-  removeVehiclesFromFavorites: any
-  favorites: any
+  addVehiclesToFavorites: () => void
+  removeVehiclesFromFavorites: () => void
+  favorites: []
 }
 
 const Vehicles: React.FC<VehiclesProps> = ({
@@ -46,7 +46,9 @@ const Vehicles: React.FC<VehiclesProps> = ({
     vehicles?.previous
   )
 
-  const favoritesInVehicles = favorites.map((i: any) => i.url)
+  const favoritesInVehicles = favorites.map(
+    (i: Record<string, unknown>) => i.url
+  )
 
   return (
     <div className={s['vehicles-wrapper']}>

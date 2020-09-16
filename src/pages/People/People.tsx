@@ -22,9 +22,9 @@ interface PeopleProps {
   isFetching: boolean
   fetchSearchedPeopleData: () => void
   fetchPeoplePageData: () => void
-  addPeopleToFavorites: any
-  favorites: any
-  removePeopleFromFavorites: any
+  addPeopleToFavorites: () => void
+  favorites: []
+  removePeopleFromFavorites: () => void
 }
 
 const People: React.FC<PeopleProps> = ({
@@ -46,7 +46,7 @@ const People: React.FC<PeopleProps> = ({
     people?.previous
   )
 
-  const favoritesInPeople = favorites.map((i: any) => i.url)
+  const favoritesInPeople = favorites.map((i: Record<string, unknown>) => i.url)
 
   return (
     <div className={s['people-wrapper']}>

@@ -22,9 +22,9 @@ interface PlanetsProps {
   isFetching: boolean
   fetchSearchedPlanetsData: () => void
   fetchPlanetsPageData: () => void
-  addPlanetsToFavorites: any
-  removePlanetsFromFavorites: any
-  favorites: any
+  addPlanetsToFavorites: () => void
+  removePlanetsFromFavorites: () => void
+  favorites: []
 }
 
 const Planets: React.FC<PlanetsProps> = ({
@@ -66,7 +66,7 @@ const Planets: React.FC<PlanetsProps> = ({
                   dataUrl={`/${planetUrl}/films`}
                   setToFavoritesCallback={addPlanetsToFavorites}
                   isFavorite={favoritesInPlanets.some(
-                    (i: any) => i === planet.url
+                    (i: string) => i === planet.url
                   )}
                   removeFromFavoritesCallback={removePlanetsFromFavorites}
                 />

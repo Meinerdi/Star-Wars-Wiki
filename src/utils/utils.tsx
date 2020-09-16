@@ -9,9 +9,9 @@ export const createLinkForPaginationControls = (link: string) => {
 
 export const createThumbnailResponseDispatcher = (
   arrayOfEndpoints: string[],
-  actionCreator: any
+  actionCreator: (arrOfStructuredData: number[]) => void
 ) => {
-  const arrayOfRequests = arrayOfEndpoints.map((request: any) =>
+  const arrayOfRequests = arrayOfEndpoints.map((request: string) =>
     axios.get(request)
   )
 

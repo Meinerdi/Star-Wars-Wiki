@@ -12,10 +12,18 @@ const initialState = {
 
 type ActionType = {
   type: string
-  payload: any
+  payload: Record<string, unknown>
 }
 
-export const planetsReducer = (state = initialState, action: ActionType) => {
+type State = {
+  planets: null | []
+  currentPlanets: null | []
+}
+
+export const planetsReducer = (
+  state: State = initialState,
+  action: ActionType
+) => {
   switch (action.type) {
     case SET_PLANETS_DATA:
       return {

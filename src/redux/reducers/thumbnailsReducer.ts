@@ -22,7 +22,19 @@ type ActionType = {
   payload: any
 }
 
-export const thumbnailsReducer = (state = initialState, action: ActionType) => {
+type State = {
+  films: null | []
+  homeworld: null | []
+  starships: null | []
+  vehicles: null | []
+  species: null | []
+  people: null | []
+}
+
+export const thumbnailsReducer = (
+  state: State = initialState,
+  action: ActionType
+) => {
   switch (action.type) {
     case SET_THUMBNAILS_FILMS:
       return {

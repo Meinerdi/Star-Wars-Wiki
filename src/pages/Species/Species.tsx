@@ -18,13 +18,13 @@ import {
 
 interface SpeciesProps {
   fetchSpeciesData: () => void
-  fetchSpeciesPageData: any
-  fetchSearchedSpeciesData: any
+  fetchSpeciesPageData: (pageNumber: string) => void
+  fetchSearchedSpeciesData: (searchedText: string) => void
   species: any
   isFetching: boolean
-  addSpeciesToFavorites: any
-  removeSpeciesFromFavorites: any
-  favorites: any
+  addSpeciesToFavorites: () => void
+  removeSpeciesFromFavorites: () => void
+  favorites: []
 }
 
 const Species: React.FC<SpeciesProps> = ({
@@ -46,7 +46,9 @@ const Species: React.FC<SpeciesProps> = ({
     species?.previous
   )
 
-  const favoritesInSpecies = favorites.map((i: any) => i.url)
+  const favoritesInSpecies = favorites.map(
+    (i: Record<string, unknown>) => i.url
+  )
 
   return (
     <div className={s['species-wrapper']}>

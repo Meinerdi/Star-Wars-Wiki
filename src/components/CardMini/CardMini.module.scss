@@ -47,3 +47,7 @@
     background-color: rgba(255, 239, 9, 0.733);
   }
 }
+
+.card-holder:hover .favorite-button {
+  transform: scale(1.2);
+}

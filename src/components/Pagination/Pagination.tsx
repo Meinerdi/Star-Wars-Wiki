@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import s from './Pagination.module.scss'
-// import { URLSearchParams } from 'url'
 
 interface PaginationProps {
   totalItems: number
@@ -9,7 +8,7 @@ interface PaginationProps {
   nextPage: string | null
   previousPage: string | null
   linkTemplate: string
-  handleClickPageCallback: any
+  handleClickPageCallback: (searchedText: string) => void
 }
 
 export const Pagination: React.FC<PaginationProps> = ({

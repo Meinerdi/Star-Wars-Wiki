@@ -10,11 +10,11 @@ export const SearchField: React.FC<SearchFieldProps> = ({
   placeholder,
   handleSubmitCallback,
 }) => {
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
   }
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSubmitCallback(e.target.value)
   }
 
