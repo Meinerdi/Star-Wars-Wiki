@@ -1,0 +1,48 @@
+.sidebar {
+  width: 25%;
+  height: 70vh;
+  background: rgba(24, 22, 22, 0.438);
+
+  .navigation {
+    margin: 0 15%;
+    font-weight: bold;
+
+    .menu-list {
+      list-style: none;
+    }
+
+    .menu-item {
+      position: relative;
+      margin: 3em 0;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 0.1em;
+        background: black;
+        left: 0;
+        bottom: -10px;
+        background-image: linear-gradient(to right, #030303, #b61f38);
+      }
+
+      .menu-link {
+        line-height: 1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.4em;
+        color: rgba(#fff, 0.4);
+        display: block;
+        transition: all ease-out 300ms;
+
+        &.active {
+          color: white;
+          font-size: 1.5em;
+        }
+        &:not(.active):hover {
+          color: rgba(#fff, 0.75);
+        }
+      }
+    }
+  }
+}

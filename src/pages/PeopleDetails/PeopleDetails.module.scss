@@ -1,0 +1,58 @@
+.person-avatar {
+  max-width: 30%;
+  margin: 0 10px 0 0;
+}
+
+.card-inner {
+  display: flex;
+  margin: 0 0 10px;
+}
+
+.personal-info-list {
+  height: 100%;
+  padding: 10px 40px;
+
+  td {
+    padding: 0 10px 0 0;
+  }
+
+  tr td:first-child {
+    text-transform: uppercase;
+    font-weight: 200;
+    font-size: 12px;
+  }
+  tr td:last-child {
+    color: rgb(179, 177, 177);
+    font-size: 12px;
+  }
+}
+
+.personal-info {
+  width: 100%;
+  background: rgba(24, 22, 22, 0.438);
+}
+
+.additional-info {
+  background: rgba(24, 22, 22, 0.438);
+}
+
+.additional-info {
+  @extend .personal-info-list;
+}
+
+.thumbnail-holder {
+  display: flex;
+
+  .card-thumbnail {
+    background: rgba(24, 22, 22, 0.705);
+    margin: 0 5px 0 0;
+    color: #fff;
+    text-decoration: none;
+    padding: 3px 4px;
+
+    &:hover {
+      color: rgba(180, 27, 27, 0.788);
+      transition: all 0.4s ease;
+    }
+  }
+}

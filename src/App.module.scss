@@ -2,17 +2,35 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul,
+ol {
+  list-style: none;
 }
 
 .app-wrapper {
   height: 100vh;
   background: url('./assets/images/background.jpg') left / cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
 
-  span {
-    color: #fff;
-    font: 60px sans-serif;
-  }
+.sub-wrapper {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.content-wrapper {
+  display: flex;
+}
+
+.pages {
+  color: #fff;
+  padding: 0 40px;
+  width: 75%;
 }

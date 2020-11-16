@@ -10,6 +10,9 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.5",
+    "axios": "^0.20.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -26,8 +29,15 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --write src/**/*.ts{,x}",
-    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
+    "check:prettier": "prettier --check src/**/*.{js,jsx,ts,tsx}",
+    "check:eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "check:typescript": "tsc",
+    "check:all": "yarn check:typescript && yarn check:eslint && yarn check:prettier",
+    "fix:prettier": "prettier --write src/**/*.{js,jsx,ts,tsx}",
+    "fix:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "fix:all": "yarn fix:eslint && yarn fix:prettier"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,8 +55,16 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@storybook/addon-actions": "^6.0.21",
+    "@storybook/addon-essentials": "^6.0.21",
+    "@storybook/addon-links": "^6.0.21",
+    "@storybook/node-logger": "^6.0.21",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^6.0.21",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
+    "babel-loader": "^8.1.0",
     "eslint-config-airbnb-typescript": "6.3.2",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
@@ -56,11 +74,12 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "husky": "^4.2.5",
-    "prettier": "^2.1.1"
+    "prettier": "^2.1.1",
+    "react-is": "^16.13.1"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint"
+      "pre-commit": "yarn check:all"
     }
   }
 }

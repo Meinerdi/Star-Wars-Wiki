@@ -1,0 +1,19 @@
+.search-input {
+  border: none;
+  outline: none;
+  background: rgba(24, 22, 22, 0.438);
+  color: #fff;
+  padding: 8px 10px;
+  width: 100%;
+  display: block;
+  height: 40px;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.849);
+  }
+}
+
+.input-wrapper {
+  margin: 0 0 10px;
+  border-bottom: 1px solid rgba(138, 23, 23, 0.644);
+}
