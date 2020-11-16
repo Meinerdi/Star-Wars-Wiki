@@ -2,11 +2,17 @@ import React from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import s from './ThumbnailsHolder.module.scss'
 
-export const ThumbnailsHolder = ({
+type Props = {
+  thumbnails: any
+  rootLocation: string
+  enpointsOfThumbnails: any
+}
+
+export const ThumbnailsHolder: React.FC<Props> = ({
   thumbnails,
   rootLocation,
   enpointsOfThumbnails,
-}: any) => {
+}) => {
   const locationOfThumbnail = useLocation()
     .pathname.split('/')
     .slice(-1)
@@ -33,19 +39,23 @@ export const ThumbnailsHolder = ({
       <div className={s['thumbnails-holder']}>
         <ul className={s['thumbnails-info-list']}>
           {thumbnails[locationOfThumbnail] &&
-            thumbnails[locationOfThumbnail].map((title: string[], idx: any) => {
-              const link = enpointsOfThumbnails[locationOfThumbnail][idx]
-                .split('/')
-                .slice(-3)
-                .join('/')
-              return (
-                <li key={title.toString()} className={s['info-list-item']}>
-                  <Link to={`/${link}`} className={s['thumb-link']}>
-                    {title}
-                  </Link>
-                </li>
-              )
-            })}
+            thumbnails[locationOfThumbnail].map(
+              (title: string[], idx: number) => {
+                const link = enpointsOfThumbnails[locationOfThumbnail][idx]
+                  .split('/')
+                  .slice(-3)
+                  .join('/')
+                  .slice(0, -1)
+
+                return (
+                  <li key={title.toString()} className={s['info-list-item']}>
+                    <Link to={`/${link}`} className={s['thumb-link']}>
+                      {title}
+                    </Link>
+                  </li>
+                )
+              }
+            )}
         </ul>
       </div>
     </div>

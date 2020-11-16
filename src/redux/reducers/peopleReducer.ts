@@ -12,10 +12,18 @@ const initialState = {
 
 type ActionType = {
   type: string
-  payload: any
+  payload: Record<string, unknown>
 }
 
-export const peopleReducer = (state = initialState, action: ActionType) => {
+type State = {
+  people: null | []
+  currentPeople: null | []
+}
+
+export const peopleReducer = (
+  state: State = initialState,
+  action: ActionType
+) => {
   switch (action.type) {
     case SET_PEOPLE_DATA:
       return {

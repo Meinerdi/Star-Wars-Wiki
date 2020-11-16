@@ -15,6 +15,20 @@ import {
 } from '../../redux/actions/actionsThumbnails'
 import { createThumbnailResponseDispatcher } from '../../utils/utils'
 
+type Props = {
+  match: any
+  fetchCurrentFilmsData: (filmId: number) => void
+  currentFilms: any
+  isFetching: boolean
+  thumbnails: any
+  setThumbnailsPeople: (payload: any) => void
+  setThumbnailsHomeworld: (payload: any) => void
+  setThumbnailsStarships: (payload: any) => void
+  setThumbnailsVehicles: (payload: any) => void
+  setThumbnailsSpecies: (payload: any) => void
+  resetThumbnailsStore: (payload?: any) => void
+}
+
 const FilmsDetails = ({
   match,
   fetchCurrentFilmsData,
@@ -27,7 +41,7 @@ const FilmsDetails = ({
   setThumbnailsVehicles,
   setThumbnailsSpecies,
   resetThumbnailsStore,
-}: any) => {
+}: Props) => {
   useEffect(() => {
     fetchCurrentFilmsData(match.params.id)
 

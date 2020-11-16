@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { CardMini } from '../../components/CardMini/CardMini'
+import { Pagination } from '../../components/Pagination/Pagination'
+import { Preloader } from '../../components/Preloader/Preloader'
+import {
+  addPeopleToFavorites,
+  removePeopleFromFavorites,
+} from '../../redux/actions/actionsFavorites'
 import {
   fetchPeopleData,
-  fetchSearchedPeopleData,
   fetchPeoplePageData,
+  fetchSearchedPeopleData,
 } from '../../redux/actions/actionsPeople'
 import { MainSearchField } from '../../stories/SearchField.stories'
-import s from './People.module.scss'
-import { Preloader } from '../../components/Preloader/Preloader'
-import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
+import s from './People.module.scss'
 
 interface PeopleProps {
   fetchPeopleData: () => void
@@ -18,6 +22,9 @@ interface PeopleProps {
   isFetching: boolean
   fetchSearchedPeopleData: () => void
   fetchPeoplePageData: () => void
+  addPeopleToFavorites: () => void
+  favorites: []
+  removePeopleFromFavorites: () => void
 }
 
 const People: React.FC<PeopleProps> = ({
@@ -26,6 +33,9 @@ const People: React.FC<PeopleProps> = ({
   isFetching,
   fetchSearchedPeopleData,
   fetchPeoplePageData,
+  addPeopleToFavorites,
+  favorites,
+  removePeopleFromFavorites,
 }) => {
   useEffect(() => {
     fetchPeopleData()
@@ -35,6 +45,8 @@ const People: React.FC<PeopleProps> = ({
   const linkForPreviousPagination = createLinkForPaginationControls(
     people?.previous
   )
+
+  const favoritesInPeople = favorites.map((i: Record<string, unknown>) => i.url)
 
   return (
     <div className={s['people-wrapper']}>
@@ -52,6 +64,11 @@ const People: React.FC<PeopleProps> = ({
                   data={person}
                   key={person.name}
                   dataUrl={`/${personUrl}/films`}
+                  setToFavoritesCallback={addPeopleToFavorites}
+                  isFavorite={favoritesInPeople.some(
+                    (i: any) => i === person.url
+                  )}
+                  removeFromFavoritesCallback={removePeopleFromFavorites}
                 />
               )
             })}
@@ -74,10 +91,13 @@ const People: React.FC<PeopleProps> = ({
 const mapStateToProps = (state: any) => ({
   people: state.peopleReducer.people,
   isFetching: state.globalReducer.isFetching,
+  favorites: state.favoritesReducer.people,
 })
 
 export const PeopleContainer = connect(mapStateToProps, {
   fetchPeopleData,
   fetchSearchedPeopleData,
   fetchPeoplePageData,
+  addPeopleToFavorites,
+  removePeopleFromFavorites,
 })(People)

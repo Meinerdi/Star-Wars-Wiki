@@ -8,6 +8,7 @@
   margin: 0 10px 10px;
   background: rgba(24, 22, 22, 0.438);
   padding: 0 0 5px;
+  position: relative;
 
   &:hover * {
     color: rgb(155, 28, 28);
@@ -27,4 +28,26 @@
   color: #fff;
   text-align: center;
   font-size: 12px;
+}
+
+.favorite-button {
+  background-image: url('../../assets/images/favorites.png');
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-size: cover;
+  cursor: pointer;
+  background-color: rgba(146, 146, 146, 0.473);
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  top: 0;
+
+  &.is-favorite {
+    background-color: rgba(255, 239, 9, 0.733);
+  }
+}
+
+.card-holder:hover .favorite-button {
+  transform: scale(1.2);
 }

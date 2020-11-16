@@ -6,10 +6,17 @@ const initialState = {
 
 type ActionType = {
   type: string
-  payload: any
+  payload: boolean
 }
 
-export const globalReducer = (state = initialState, action: ActionType) => {
+type State = {
+  isFetching: boolean
+}
+
+export const globalReducer = (
+  state: State = initialState,
+  action: ActionType
+) => {
   switch (action.type) {
     case SET_IS_FETCHING:
       return {

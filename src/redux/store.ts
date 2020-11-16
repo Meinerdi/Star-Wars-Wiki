@@ -1,14 +1,15 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
-import { peopleReducer } from './reducers/peopleReducer'
-import { speciesReducer } from './reducers/speciesReducer'
-import { globalReducer } from './reducers/globalReducer'
-import { vehiclesReducer } from './reducers/vehiclesReducer'
-import { starshipsReducer } from './reducers/starshipsReducer'
-import { planetsReducer } from './reducers/planetsReducer'
+import { favoritesReducer } from './reducers/favoritesReducer'
 import { filmsReducer } from './reducers/filmsReducer'
+import { globalReducer } from './reducers/globalReducer'
+import { peopleReducer } from './reducers/peopleReducer'
+import { planetsReducer } from './reducers/planetsReducer'
+import { speciesReducer } from './reducers/speciesReducer'
+import { starshipsReducer } from './reducers/starshipsReducer'
 import { thumbnailsReducer } from './reducers/thumbnailsReducer'
+import { vehiclesReducer } from './reducers/vehiclesReducer'
 
 const rootReducer = combineReducers({
   peopleReducer,
@@ -19,7 +20,10 @@ const rootReducer = combineReducers({
   planetsReducer,
   filmsReducer,
   thumbnailsReducer,
+  favoritesReducer,
 })
+
+export type RootState = ReturnType<typeof rootReducer>
 
 export const store = createStore(
   rootReducer,

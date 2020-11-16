@@ -12,6 +12,7 @@ import { StarshipsContainer } from '../pages/Starships/Starships'
 import { StarshipsDetailsContainer } from '../pages/StarshipsDetails/StarshipsDetails'
 import { VehiclesContainer } from '../pages/Vehicles/Vehicles'
 import { VehiclesDetailsContainer } from '../pages/VehiclesDetails/VehiclesDetails'
+import { Favorites } from '../pages/Favorites/Favorites'
 
 export const Routes = () => (
   <Switch>
@@ -27,5 +28,6 @@ export const Routes = () => (
     <Route component={PlanetsDetailsContainer} path="/planets/:id" />
     <Route component={FilmsContainer} path="/films" exact />
     <Route component={FilmsDetailsContainer} path="/films/:id" />
+    <Route component={Favorites} path="/favorites" />
   </Switch>
 )

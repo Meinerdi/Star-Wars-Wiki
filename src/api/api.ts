@@ -8,7 +8,7 @@ export const API = {
   getAllPeople() {
     return instance.get('people/')
   },
-  getCurrentPeople(peopleId: any) {
+  getCurrentPeople(peopleId: number) {
     return instance.get(`people/${peopleId}`)
   },
   getSearchedPeople(searchedText: string) {
@@ -20,7 +20,7 @@ export const API = {
   getAllSpecies() {
     return instance.get('species/')
   },
-  getCurrentSpecies(speciesId: any) {
+  getCurrentSpecies(speciesId: number) {
     return instance.get(`species/${speciesId}`)
   },
   getSearchedSpecies(searchedText: string) {
@@ -32,7 +32,7 @@ export const API = {
   getAllVehicles() {
     return instance.get('vehicles/')
   },
-  getCurrentVehicles(vehicleId: any) {
+  getCurrentVehicles(vehicleId: number) {
     return instance.get(`vehicles/${vehicleId}`)
   },
   getSearchedVehicles(searchedText: string) {
@@ -44,7 +44,7 @@ export const API = {
   getAllStarships() {
     return instance.get('starships/')
   },
-  getCurrentStarships(starshipId: any) {
+  getCurrentStarships(starshipId: number) {
     return instance.get(`starships/${starshipId}`)
   },
   getSearchedStarships(searchedText: string) {
@@ -56,7 +56,7 @@ export const API = {
   getAllPlanets() {
     return instance.get('planets/')
   },
-  getCurrentPlanets(planetId: any) {
+  getCurrentPlanets(planetId: number) {
     return instance.get(`planets/${planetId}`)
   },
   getSearchedPlanets(searchedText: string) {
@@ -68,7 +68,7 @@ export const API = {
   getAllFilms() {
     return instance.get('films/')
   },
-  getCurrentFilms(filmId: any) {
+  getCurrentFilms(filmId: number) {
     return instance.get(`films/${filmId}`)
   },
   getSearchedFilms(searchedText: string) {

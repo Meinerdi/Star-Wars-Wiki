@@ -19,7 +19,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <li key={page} className={s['menu-item']}>
               {navLink ? (
                 <NavLink
-                  to={`/${page.toLowerCase()}/?page=1`}
+                  to={
+                    page === 'Favorites'
+                      ? `/${page.toLowerCase()}/people`
+                      : `/${page.toLowerCase()}/?page=1`
+                  }
                   className={s['menu-link']}
                   activeClassName={s.active}
                 >

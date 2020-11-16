@@ -11,6 +11,10 @@ import s from './Vehicles.module.scss'
 import { Preloader } from '../../components/Preloader/Preloader'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { createLinkForPaginationControls } from '../../utils/utils'
+import {
+  addVehiclesToFavorites,
+  removeVehiclesFromFavorites,
+} from '../../redux/actions/actionsFavorites'
 
 interface VehiclesProps {
   fetchVehiclesData: () => void
@@ -18,6 +22,9 @@ interface VehiclesProps {
   isFetching: boolean
   fetchSearchedVehiclesData: () => void
   fetchVehiclesPageData: () => void
+  addVehiclesToFavorites: () => void
+  removeVehiclesFromFavorites: () => void
+  favorites: []
 }
 
 const Vehicles: React.FC<VehiclesProps> = ({
@@ -26,6 +33,9 @@ const Vehicles: React.FC<VehiclesProps> = ({
   isFetching,
   fetchSearchedVehiclesData,
   fetchVehiclesPageData,
+  addVehiclesToFavorites,
+  favorites,
+  removeVehiclesFromFavorites,
 }) => {
   useEffect(() => {
     fetchVehiclesData()
@@ -34,6 +44,10 @@ const Vehicles: React.FC<VehiclesProps> = ({
   const linkForNextPagination = createLinkForPaginationControls(vehicles?.next)
   const linkForPreviousPagination = createLinkForPaginationControls(
     vehicles?.previous
+  )
+
+  const favoritesInVehicles = favorites.map(
+    (i: Record<string, unknown>) => i.url
   )
 
   return (
@@ -52,6 +66,11 @@ const Vehicles: React.FC<VehiclesProps> = ({
                   data={vehicle}
                   key={vehicle.name}
                   dataUrl={`/${vehicleUrl}/films`}
+                  setToFavoritesCallback={addVehiclesToFavorites}
+                  isFavorite={favoritesInVehicles.some(
+                    (i: any) => i === vehicle.url
+                  )}
+                  removeFromFavoritesCallback={removeVehiclesFromFavorites}
                 />
               )
             })}
@@ -74,10 +93,13 @@ const Vehicles: React.FC<VehiclesProps> = ({
 const mapStateToProps = (state: any) => ({
   vehicles: state.vehiclesReducer.vehicles,
   isFetching: state.globalReducer.isFetching,
+  favorites: state.favoritesReducer.vehicles,
 })
 
 export const VehiclesContainer = connect(mapStateToProps, {
   fetchVehiclesData,
   fetchSearchedVehiclesData,
   fetchVehiclesPageData,
+  addVehiclesToFavorites,
+  removeVehiclesFromFavorites,
 })(Vehicles)
